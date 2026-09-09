@@ -1,8 +1,9 @@
 # CI for @digitaltwin/design-system.
 #
 # Written against a GitLab remote but NOT tied to one: every URL is built from CI_PROJECT_ID and
-# CI_SERVER_HOST, so this runs unchanged on whichever GitLab instance the repo ends up on. There
-# is no remote configured yet; this file simply waits.
+# CI_SERVER_HOST, so this runs unchanged on whichever GitLab instance the repo ends up on.
+#
+# `origin` is GitHub today, so none of this runs yet. Moving the remote is what turns it on.
 
 default:
   image: node:22
@@ -10,64 +11,46 @@ default:
     - node --version
     - npm ci --no-audit --no-fund
 
+# docs BEFORE publish, and that ordering is the point. The docs site is the library's first real
+# consumer: it is what catches a broken exports subpath or a hoisted "use client" before anything
+# is published. While publish ran only on a tag the order did not matter; now that it runs on every
+# default-branch push, a publish stage ahead of docs would ship immutably and only then go red.
 stages:
   - check
-  - publish
   - docs
+  - publish
 
 # ── check ───────────────────────────────────────────────────────────────────────────────────────
 # Order matters and is not alphabetical:
 #   · the generated files are rebuilt and diffed BEFORE anything reads them, so a stale
 #     tokens.css or components.md fails here rather than being silently trusted downstream;
-#   · the build runs BEFORE the tests, because dist-directives.test.ts inspects dist/ — it is
-#     what proves `bundle: false` still holds, and it has nothing to read otherwise.
+#   · the build runs BEFORE typecheck and the tests. dist-directives.test.ts inspects dist/ and
+#     has nothing to read otherwise, and cross-package types resolve through `exports` maps that
+#     point at dist, so a never-built dependency is an unresolvable import.
 check:
   stage: check
   script:
     - npm run format:check
     - npm run lint
+    # Cycles and boundary leaks are invisible to lint and to tsc: a cycle fails the build in a
+    # different order on a different machine, and a barrel that re-exports the Next adapter keeps
+    # every test green while breaking the promise the exports map makes.
+    - npm run check:graph
     - npm run build:tokens
     - npm run build:catalog
     - npm run docs:manifest
     # The generated files are committed. If this fails, someone edited an output instead of its
     # source — run the same three commands locally and commit the result.
     - git diff --exit-code --stat || (echo "GENERATED FILES ARE STALE — see the diff above" && exit 1)
-    - npm run typecheck
+    # Build BEFORE typecheck, not just before the tests: the workspace packages resolve each
+    # other through their `exports` maps, which point at dist. Typechecking a package whose
+    # dependency has never been built fails on a module it can see perfectly well on disk.
     - npm run build
+    - npm run typecheck
     - npm run test:coverage
   rules:
     - if: "$CI_COMMIT_TAG"
     - if: "$CI_COMMIT_BRANCH"
-
-# ── publish ─────────────────────────────────────────────────────────────────────────────────────
-# Tag vX.Y.Z publishes packages/ui to this project's GitLab npm registry, using the
-# GitLab-provided CI_JOB_TOKEN. No secret variable to rotate.
-publish:
-  stage: publish
-  script:
-    - npm run build
-    # The .npmrc is written AFTER `npm ci` so dependencies still resolve from the public
-    # registry, but BOTH the default `registry=` and the scoped `@digitaltwin:registry` point at
-    # GitLab — so a publish can never reach npmjs.org, even if a package name were misresolved.
-    # npm reads .npmrc from the current directory only, hence publishing from the repo root with
-    # an explicit `./packages/ui` path.
-    - |
-      REGISTRY="https://${CI_SERVER_HOST}:${CI_SERVER_PORT}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/"
-      printf '%s\n' \
-        "registry=${REGISTRY}" \
-        "@digitaltwin:registry=${REGISTRY}" \
-        "//${CI_SERVER_HOST}:${CI_SERVER_PORT}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" \
-        > .npmrc
-    # Second guard, independent of the first: refuse to publish anything not scoped
-    # @digitaltwin/. Use `./packages/ui` — a bare name would be read as a registry package-spec
-    # rather than a folder.
-    - node -e "const n=require('./packages/ui/package.json').name; if(!n.startsWith('@digitaltwin/')){console.error('refusing to publish '+n);process.exit(1)}"
-    # The tag and the manifest must agree, or a `v0.2.0` tag can publish 0.1.0 and the registry
-    # silently disagrees with the git history.
-    - node -e "const v=require('./packages/ui/package.json').version; if('v'+v!==process.env.CI_COMMIT_TAG){console.error('tag '+process.env.CI_COMMIT_TAG+' != package version '+v);process.exit(1)}"
-    - npm publish ./packages/ui
-  rules:
-    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+/'
 
 # ── docs ────────────────────────────────────────────────────────────────────────────────────────
 # The docs site is the package's first real consumer: if the exports map, the "use client"
@@ -84,5 +67,40 @@ pages:
   # convention no longer deploys on its own, and `public/` is appended to artifacts:paths
   # automatically, so no artifacts block is needed.
   pages: true
+  rules:
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+# ── publish ─────────────────────────────────────────────────────────────────────────────────────
+# Publishes every workspace package whose version is not yet on the registry, using the
+# GitLab-provided CI_JOB_TOKEN. No secret variable to rotate.
+#
+# Driven by changesets, not by a git tag, and that is a deliberate change. A single `vX.Y.Z` tag
+# describes one package. It cannot describe the release this repo actually produces, where bumping
+# @digitaltwin/utils republishes @digitaltwin/design-system with an updated range in the same
+# breath. `changeset publish` reads each manifest, skips what the registry already has, and tags
+# per package.
+#
+# Runs on every default-branch pipeline and no-ops unless a `changeset version` commit landed, so
+# there is nothing to remember to trigger.
+publish:
+  stage: publish
+  script:
+    - npm run build
+    # The .npmrc is written AFTER `npm ci` so dependencies still resolve from the public
+    # registry, but BOTH the default `registry=` and the scoped `@digitaltwin:registry` point at
+    # GitLab — so a publish can never reach npmjs.org, even if a package name were misresolved.
+    # npm reads .npmrc from the current directory only, hence writing it at the repo root.
+    - |
+      REGISTRY="https://${CI_SERVER_HOST}:${CI_SERVER_PORT}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/"
+      printf '%s\n' \
+        "registry=${REGISTRY}" \
+        "@digitaltwin:registry=${REGISTRY}" \
+        "//${CI_SERVER_HOST}:${CI_SERVER_PORT}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" \
+        > .npmrc
+    # Second guard, independent of the first: refuse to publish anything not scoped @digitaltwin/.
+    # Checks every publishable workspace rather than one hardcoded path — the point of this rewrite
+    # is that the set of packages grows, and a guard naming one of them stops guarding the rest.
+    - node scripts/assert-publishable.mjs
+    - npx changeset publish
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"

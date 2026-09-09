@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_comment": [
+    "@digitaltwin/tsconfig/react-library.json — a package that ships React components.",
+    "Adds the JSX transform to the base. Type-checking only: a library that emits declarations",
+    "overrides noEmit in its own tsconfig.build.json, because emit settings depend on where the",
+    "package puts its sources and its dist, which is not something this file can know."
+  ],
+  "extends": "./base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noEmit": true
+  }
+}

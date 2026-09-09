@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_comment": [
+    "@digitaltwin/tsconfig/next.json — a Next application.",
+    "`incremental` and the next plugin are what Next itself expects; `allowJs` is for the config",
+    "files at the app root. Paths and includes stay in the app: they describe its own layout."
+  ],
+  "extends": "./base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "noEmit": true,
+    "allowJs": true,
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
+  }
+}

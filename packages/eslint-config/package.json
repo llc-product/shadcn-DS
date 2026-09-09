@@ -1,0 +1,35 @@
+{
+  "name": "@digitaltwin/eslint-config",
+  "version": "0.1.0",
+  "description": "Shared ESLint flat-config pieces for @digitaltwin packages and apps",
+  "license": "UNLICENSED",
+  "type": "module",
+  "files": [
+    "base.mjs",
+    "node.mjs",
+    "react.mjs",
+    "design-system.mjs",
+    "boundaries.mjs"
+  ],
+  "exports": {
+    "./base": "./base.mjs",
+    "./node": "./node.mjs",
+    "./react": "./react.mjs",
+    "./design-system": "./design-system.mjs",
+    "./boundaries": "./boundaries.mjs",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "globals": "^16.5.0",
+    "typescript-eslint": "^8.55.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

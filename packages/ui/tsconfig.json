@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@digitaltwin/tsconfig/react-library.json",
   "compilerOptions": {
     "noEmit": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"],

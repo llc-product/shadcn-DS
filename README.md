@@ -7,11 +7,33 @@ This is the React counterpart to [`libs/design-system`](https://gitlab.nailjob.u
 (Quasar/Vue). The two share a brand and a way of working, not a component kit.
 
 ```
-packages/ui/     @digitaltwin/design-system — the published library
-apps/docs/       the docs site (Next.js static export) — and the package's first real consumer
-scripts/         the token pipeline and the catalog generators
+packages/
+  ui/            @digitaltwin/design-system — 56 React primitives on the token layer
+  utils/         cn + formatting that states its locale instead of reading the machine's
+  types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
+  constants/     cookie names · identity headers · locales — where a MISMATCH would be a bug
+  config/        environment SCHEMA fragments (no createEnv: that is the app's call)
+  i18n/          the design system's OWN strings, translated. Not an app's copy.
+  auth/          cookie-only JWT core (edge-safe) + ./next adapter (server-only)
+  api/           single-flight refresh policy + ./rtk adapter + ./server identity forwarding
+  tsconfig/      base · react-library · next
+  eslint-config/ base · node · react · design-system · boundaries
+  testing/       the jsdom stubs and the vitest config factory
+apps/docs/       the docs site (Next.js static export) — and the library's first real consumer
+scripts/         the token pipeline, the catalog generators, and the two publish guards
 docs/            component-authoring.md (the standard) · components.md (generated)
 ```
+
+**Why the small ones are separate packages.** Because there is more than one consumer, and a
+package boundary is the only thing a second repository can import. The alternative — one
+`@digitaltwin/core` holding types, constants and utils — was rejected on the architecture's own
+rule: every folder is named for what it holds, and a bucket has no criterion for refusing anything.
+
+**Root entries are deliberately narrow.** `@digitaltwin/auth` exports only what runs anywhere; the
+Next adapter is reachable solely through `@digitaltwin/auth/next`, and `@digitaltwin/api`'s server
+half solely through `/server`. `npm run check:graph` walks what each root entry actually reaches
+and fails if server code is one of them, because an `exports` map is a promise a one-line edit can
+break with every test still green.
 
 ---
 
@@ -147,6 +169,9 @@ npm run docs:dev       # the docs site against the local build
 | `docs:manifest`     | sources + snapshot → the docs site's data                 |
 | `build`             | tokens, then `tsup` (unbundled) + `tsc` declarations      |
 | `docs:build`        | the full static export                                    |
+| `changeset`         | describe a change; one file per change, same commit       |
+| `version-packages`  | apply pending changesets: bump versions, write CHANGELOGs |
+| `release`           | build, then publish whatever the registry does not have   |
 
 Adding or changing a component: **read [`docs/component-authoring.md`](docs/component-authoring.md) first.**
 The component list is [`docs/components.md`](docs/components.md), generated from the sources.
@@ -157,12 +182,33 @@ The component list is [`docs/components.md`](docs/components.md), generated from
   `dist`, and no module that does not has acquired one. `bundle: false` in `tsup.config.ts` is one
   word in a file nobody reads twice, and flipping it would keep the build green while making the
   whole library a client reference. This is what notices.
-- **the coverage ratchet** — set just under what the suite covers today (98.15 / 89.28 / 97 /
-  98.15). Raise it as tests are added; never lower it to make CI green.
+- **a coverage ratchet per package**, set just under what that package's suite actually covers, not
+  to an aspiration. `packages/ui` sits at 97 / 89 / 97 / 97 against a suite measuring ~98; the six
+  smaller packages are at 95 / 90 / 95 / 95 and most of them measure 100. Raise them as tests are
+  added; the one thing never to do is lower one to make CI green, which converts the only automatic
+  signal about test decay into a number someone edits whenever it complains.
 - **`git diff --exit-code` in CI** — the generated files cannot drift from their sources.
 
-### No remote yet
+### Releasing
 
-`git init`, no `origin`. `.gitlab-ci.yml` builds every URL from `CI_PROJECT_ID` and
-`CI_SERVER_HOST`, so it runs unchanged on whichever GitLab instance this ends up on. Until then:
-`npm version` and `npm pack` locally, and consume through `file:`.
+Releases are driven by [changesets](.changeset/README.md), not by a version tag.
+
+```bash
+npx changeset            # while making the change: what changed, which packages, which bump
+npx changeset version    # on the release branch: bump versions, write CHANGELOGs
+```
+
+CI publishes from the default branch. `changeset publish` compares each manifest against the
+registry and ships only what is missing, so the job is a no-op until a version commit lands, and
+`scripts/assert-publishable.mjs` refuses the whole run if any workspace package is unscoped,
+unversioned, or not marked `restricted`.
+
+A tag-and-version-match guard would not survive more than one package: most releases here are a
+fan-out, where bumping one package republishes everything that depends on it in the same breath.
+
+### The remote
+
+`origin` is GitHub today. `.gitlab-ci.yml` builds every URL from `CI_PROJECT_ID` and
+`CI_SERVER_HOST`, so it runs unchanged on whichever GitLab instance this ends up on — but it does
+not run on GitHub at all, so nothing publishes until the remote moves. Until then: `npm pack`
+locally and consume through `file:`.

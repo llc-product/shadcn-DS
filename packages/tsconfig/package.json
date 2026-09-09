@@ -1,0 +1,20 @@
+{
+  "name": "@digitaltwin/tsconfig",
+  "version": "0.1.0",
+  "description": "Shared TypeScript presets for @digitaltwin packages and apps",
+  "license": "UNLICENSED",
+  "files": [
+    "base.json",
+    "react-library.json",
+    "next.json"
+  ],
+  "exports": {
+    "./base.json": "./base.json",
+    "./react-library.json": "./react-library.json",
+    "./next.json": "./next.json",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

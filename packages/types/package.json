@@ -1,0 +1,35 @@
+{
+  "name": "@digitaltwin/types",
+  "version": "0.1.0",
+  "description": "Cross-cutting TypeScript contracts shared by every @digitaltwin app",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@digitaltwin/tsconfig": "*",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.3"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=22.22.2"
+  }
+}

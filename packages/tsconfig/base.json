@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_comment": [
+    "@digitaltwin/tsconfig/base.json — the settings every @digitaltwin package and app shares.",
+    "Moved here from the repo root so a consumer in another repository gets the same compiler,",
+    "not a copy of it that drifts. Nothing app- or React-specific belongs in this file.",
+    "",
+    "Beyond `strict`. These are consumed by every app, so the type surface should model the",
+    "strictest settings that are livable. noUncheckedIndexedAccess is the one that catches real",
+    "bugs — arr[0] and record[key] are typed as possibly undefined, which they genuinely are.",
+    "`jsx` is here, not only in react-library.json: a leaf package that adds one .tsx file",
+    "otherwise gets no JSX transform at all, and the failure reads as a syntax error."
+  ],
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
+  }
+}

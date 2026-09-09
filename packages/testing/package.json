@@ -1,0 +1,46 @@
+{
+  "name": "@digitaltwin/testing",
+  "version": "0.1.0",
+  "description": "Shared Vitest setup and config factory for @digitaltwin packages and apps",
+  "license": "UNLICENSED",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    },
+    "./setup": {
+      "types": "./dist/setup.d.ts",
+      "import": "./dist/setup.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "@testing-library/jest-dom": "^6",
+    "@vitejs/plugin-react": "^6",
+    "@vitest/coverage-v8": "^5",
+    "jsdom": "^30",
+    "vitest": "^5"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "tsup && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@digitaltwin/tsconfig": "*",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^5.0.0",
+    "jsdom": "^30.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.3",
+    "vitest": "^5.0.0"
+  }
+}
