@@ -35,6 +35,21 @@ versioned package.
   `PaginationNext` rendered "Previous" / "Next" through a path a caller could not reach. All
   user-visible strings are now defaults a consuming app can replace.
 
+- **`ChartTooltipContent` formatted numbers against the host's locale.** It called
+  `value.toLocaleString()` with no locale, so the same value rendered "1,234" on an en-US machine
+  and "1.234" on a vi-VN one — a hydration mismatch between a server render and the browser, and a
+  test that passed or failed depending on who ran it. The default is now pinned, and a new
+  `valueFormatter` prop is how a consumer localises deliberately.
+
+### Fixed — the repo on Windows
+
+- **Three things broke at once on a Windows checkout**, all from CRLF. `scripts/lib/catalog.mjs`
+  parses `components/index.ts` with `$`-anchored patterns, which do not match before a `\r`, so the
+  barrel read as empty and `build:catalog` reported all 56 folders as missing from the file that
+  lists them. Prettier's `endOfLine` default is `lf`, so `format:check` failed on every file. Fixed
+  at both ends on purpose: `.gitattributes` pins LF in the working tree, and the script normalises
+  what it reads — neither should have to trust the other.
+
 ### Added — the 21 shadcn primitives the kit was missing
 
 Ported from `nextjs-boilerplate`'s `src/components/ui`, each into its own folder with a test,

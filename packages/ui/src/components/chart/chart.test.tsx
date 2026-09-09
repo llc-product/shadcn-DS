@@ -112,7 +112,24 @@ describe("ChartTooltipContent", () => {
     );
     // Twice: once as the tooltip's label row, once as the series name beside its value.
     expect(screen.getAllByText("Desktop")).toHaveLength(2);
+    // Pinned, not host-locale: this asserted the machine's locale before, so it passed in en-US
+    // and failed in vi-VN ("1.234") on the same commit.
     expect(screen.getByText("1,234")).toBeInTheDocument();
+  });
+
+  it("lets a consumer format the value", () => {
+    render(
+      <Wrap>
+        <ChartTooltipContent
+          active
+          payload={[item()]}
+          label="desktop"
+          valueFormatter={(v) => `${Number(v) / 1000}k`}
+        />
+      </Wrap>,
+    );
+    expect(screen.getByText("1.234k")).toBeInTheDocument();
+    expect(screen.queryByText("1,234")).not.toBeInTheDocument();
   });
 
   it("hides the label on request", () => {

@@ -20,9 +20,22 @@ import { UI_SRC } from "./token-schema.mjs";
 
 export const COMPONENTS_DIR = join(UI_SRC, "components");
 
+/**
+ * Read a source file with line endings normalised to LF.
+ *
+ * Every pattern below anchors with `$`, and `$` does not match before a CRLF's `\r`. On a Windows
+ * checkout with `core.autocrlf=true` that failed silently and completely: not one `export * from`
+ * line matched, so the barrel looked empty and `catalog()` reported all 56 component folders as
+ * missing from a file that lists every one of them.
+ *
+ * `.gitattributes` now pins LF, which fixes the same bug at the other end. Both exist on purpose —
+ * a contributor's git config is not something a build script should have to trust.
+ */
+const readSource = (file) => readFileSync(file, "utf8").replace(/\r\n/g, "\n");
+
 /** The section comments in components/index.ts, in order, with the folders under each. */
 export function sections() {
-  const barrel = readFileSync(join(COMPONENTS_DIR, "index.ts"), "utf8");
+  const barrel = readSource(join(COMPONENTS_DIR, "index.ts"));
   const out = [];
   let current = null;
   for (const line of barrel.split("\n")) {
@@ -41,7 +54,7 @@ export function sections() {
 /** Everything derivable about one component folder, plus its sidecar if it has one. */
 export function describeComponent(name) {
   const file = join(COMPONENTS_DIR, name, `${name}.tsx`);
-  const source = readFileSync(file, "utf8");
+  const source = readSource(file);
 
   const header = source.match(/^\/\/ components\/[\w-]+\.tsx(?: — (.+))?$/m);
   const radix = source.match(/from "@radix-ui\/react-([\w-]+)"/);
@@ -49,7 +62,7 @@ export function describeComponent(name) {
   // Exported symbols come from the folder barrel, not from the TSX: the barrel is what decides
   // what is public, and a component may deliberately not export a helper it defines.
   const barrelFile = join(COMPONENTS_DIR, name, "index.ts");
-  const barrel = existsSync(barrelFile) ? readFileSync(barrelFile, "utf8") : "";
+  const barrel = existsSync(barrelFile) ? readSource(barrelFile) : "";
   const exports = [
     ...barrel.matchAll(/(?:^|[{,]\s*)((?:type\s+)?[A-Za-z][\w]*)\s*(?=[,}])/g),
   ]

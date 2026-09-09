@@ -1,0 +1,25 @@
+# Line endings are LF in the repo AND in the working tree, on every platform.
+#
+# Not a style preference. Three things in this repo parse their own source files with regexes that
+# anchor on `$`, which does not match before a CRLF's `\r`:
+#   · scripts/lib/catalog.mjs reads components/index.ts to build the catalog,
+#   · prettier's endOfLine default is "lf", so a CRLF checkout fails `format:check` on every file,
+#   · the CI job diffs generated files and would see a checkout artefact as a stale build.
+# On Windows with the default `core.autocrlf=true`, all three broke at once. `eol=lf` overrides
+# autocrlf, so a Windows clone now gets the same bytes CI does.
+#
+# The scripts were also made CRLF-tolerant. This file and that fix are deliberately redundant:
+# neither should have to trust the other.
+* text=auto eol=lf
+
+# Binaries git must never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary

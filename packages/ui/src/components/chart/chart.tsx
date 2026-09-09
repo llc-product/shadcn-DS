@@ -81,6 +81,22 @@ export function ChartContainer({
 
 export const ChartTooltip = RechartsPrimitive.Tooltip;
 
+/**
+ * Default number formatting for a tooltip value — pinned to one locale, deliberately.
+ *
+ * This was `value.toLocaleString()`, which reads whichever locale the HOST is set to. That is the
+ * wrong owner for the decision twice over. A chart rendered on the server and hydrated in the
+ * browser would format the same number against two different locales and mismatch on hydration;
+ * and a test asserting "1,234" passed or failed depending on who ran it — it came out "1.234" on a
+ * vi-VN machine.
+ *
+ * A design system must not pick a user's locale for them. It renders the same everywhere until a
+ * consumer says otherwise, and `valueFormatter` is how they say so.
+ */
+const defaultValueFormat = new Intl.NumberFormat("en-US");
+const formatTooltipValue = (value: unknown): React.ReactNode =>
+  typeof value === "number" ? defaultValueFormat.format(value) : String(value);
+
 export function ChartTooltipContent({
   active,
   payload,
@@ -92,6 +108,7 @@ export function ChartTooltipContent({
   labelFormatter,
   labelClassName,
   formatter,
+  valueFormatter = formatTooltipValue,
   color,
   nameKey,
   labelKey,
@@ -101,6 +118,8 @@ export function ChartTooltipContent({
   label?: RechartsPrimitive.TooltipContentProps["label"];
   labelFormatter?: RechartsPrimitive.TooltipContentProps["labelFormatter"];
   formatter?: RechartsPrimitive.TooltipContentProps["formatter"];
+  /** Formats the value shown on the right of each row. Pass one to localise. */
+  valueFormatter?: (value: unknown) => React.ReactNode;
   labelClassName?: string;
   color?: string;
   hideLabel?: boolean;
@@ -209,7 +228,7 @@ export function ChartTooltipContent({
                     </div>
                     {item.value !== undefined && (
                       <span className="font-mono font-medium text-foreground">
-                        {item.value.toLocaleString()}
+                        {valueFormatter(item.value)}
                       </span>
                     )}
                   </div>
