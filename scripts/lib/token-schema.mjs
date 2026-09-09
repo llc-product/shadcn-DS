@@ -38,7 +38,8 @@ export const PREFIX_MIN = [
   { col: "primitives", prefix: "colors/brand/", min: 2 },
   { col: "primitives", prefix: "colors/neutral/", min: 9 },
   { col: "primitives", prefix: "border radius/", min: 1 },
-  { col: "semantic", prefix: "color/", min: 20 },
+  { col: "semantic", prefix: "color/", min: 25 },
+  { col: "primitives", prefix: "colors/chart/", min: 10 },
   { col: "typo-base", prefix: "typography/font-family/", min: 2 },
   { col: "motion", prefix: "duration/", min: 3 },
   { col: "motion", prefix: "easing/", min: 3 },
@@ -80,6 +81,14 @@ export const SEMANTIC_ORDER = [
   "border",
   "input",
   "ring",
+  // Chart series. Decorative by construction — a series fill or stroke is not text and has no
+  // partner token to be read against, so these carry no CONTRAST_PAIRS entry. Keeping them in
+  // the semantic layer is still right: they are theme-dependent, and the app re-brands them here.
+  "chart-1",
+  "chart-2",
+  "chart-3",
+  "chart-4",
+  "chart-5",
 ];
 
 /**

@@ -35,8 +35,57 @@ versioned package.
   `PaginationNext` rendered "Previous" / "Next" through a path a caller could not reach. All
   user-visible strings are now defaults a consuming app can replace.
 
+### Added — the 21 shadcn primitives the kit was missing
+
+Ported from `nextjs-boilerplate`'s `src/components/ui`, each into its own folder with a test,
+under the same standard as the original 35. **56 components, 311 tests, 98.01% statements.**
+
+- **Layout / containers** — `AspectRatio`, `Collapsible`, `Resizable`, `Carousel`, `Item`
+- **Forms** — `Field`, `InputGroup`, `NativeSelect`, `InputOTP`, `Calendar`, `DatePicker`,
+  `Combobox`
+- **Overlays** — `ContextMenu`, `Menubar`, `NavigationMenu`, `Command`, `Drawer`
+- **Primitives** — `Kbd`, `ButtonGroup`
+- **Feedback** — `Empty`
+- **Data display** — `Chart`
+
+`--chart-1` … `--chart-5` join the token pipeline as semantic colours with their own Light/Dark
+primitives — re-hued per theme, not re-lightened, because the light series loses separation on a
+dark ground. They carry no `CONTRAST_PAIRS` entry: a series fill is not text and has no partner
+token to be read against.
+
+Heavy, feature-specific runtimes (`recharts`, `vaul`, `cmdk`, `embla-carousel-react`,
+`react-day-picker`, `react-resizable-panels`, `input-otp`) are **optional peer dependencies**, so
+an app that never renders a `Chart` does not pay for recharts. The five new Radix packages are
+ordinary dependencies, as the other twenty-one already were.
+
+### Fixed — while porting
+
+- **`CarouselPrevious` / `CarouselNext` hardcoded their screen-reader labels.** "Previous slide"
+  and "Next slide" were JSX children, which always beat `props.children` — so no consuming app
+  could reach them. Both now take a `label` prop with that default, and children replace the arrow
+  outright. Same defect the `Pagination` pair had.
+- **`DatePicker` opened on today, not on its own value.** react-day-picker does not derive the
+  displayed month from `selected`, so a picker holding a date in March opened on the current month
+  and the user had to navigate back to their own answer.
+- **`DatePicker` imported `next-intl`.** A primitive may not decide a locale — the package is
+  lint-blocked from framework imports for exactly this reason. It now takes a `locale` prop.
+- **`docs:manifest` never ran Prettier**, unlike the other two generators, so the committed
+  `apps/docs/src/data/components.json` failed `format:check` — the first step of CI.
+
+### Changed
+
+- The coverage ratchet moves up with the suite: **97 / 97 / 89 / 97** (was 97 / 95 / 88 / 97).
+- `vitest.setup.ts` gains two jsdom stubs: `IntersectionObserver` (Embla observes slides to decide
+  what is in view) and `document.elementFromPoint` (input-otp hit-tests to place its caret — the
+  real call threw asynchronously, which passed every test and failed the run).
+
 ### Known gaps
 
 - Figma has no variable collection for the React DS, so `tokens.export.json` is hand-seeded.
   `sync-tokens.mjs` and `check-figma-drift.mjs` are written and wait for it.
+- **`animate-in`, `animate-out` and `animate-caret-blink` are not defined anywhere.** Five modules
+  reach for them — `accordion`, `collapsible`, `dialog`, `navigation-menu`, `input-otp` — and the
+  classes are inert: the components open and close correctly, without a transition. They come from
+  `tw-animate-css`, which neither this package nor the boilerplate installs. Predates the port;
+  the fix is a decision about which animation layer this library owns.
 - No git remote, so nothing is published yet. Consume through `file:`.

@@ -1,6 +1,6 @@
 # @digitaltwin/design-system
 
-React 19 primitives on Tailwind v4 design tokens. 35 components, one token layer, one contrast
+React 19 primitives on Tailwind v4 design tokens. 56 components, one token layer, one contrast
 gate that fails the build rather than a review.
 
 This is the React counterpart to [`libs/design-system`](https://gitlab.nailjob.us:8081/libs/design-system)
@@ -72,8 +72,9 @@ is looking at, and two copies of `next-themes` means the toggle and the provider
 
 ### Server components
 
-24 of the 35 modules carry `"use client"`; the other 11 — `Button`, `Card`, `Badge`, `Table`,
-`Alert`, `Breadcrumb`, `Pagination`, `Input`, `Textarea`, `Skeleton`, `Spinner` — render in a
+38 of the 56 modules carry `"use client"`; the other 18 — `Button`, `ButtonGroup`, `Card`,
+`Badge`, `Table`, `Alert`, `Breadcrumb`, `Pagination`, `Input`, `InputGroup`, `Textarea`,
+`NativeSelect`, `Field`, `Item`, `Empty`, `Kbd`, `Skeleton`, `Spinner` — render in a
 Server Component and cost the route nothing. The build is deliberately **unbundled** so that
 stays true per file rather than collapsing to "the whole library is a client reference".
 

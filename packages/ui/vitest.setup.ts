@@ -13,6 +13,21 @@ globalThis.ResizeObserver ??= class {
   disconnect() {}
 } as unknown as typeof ResizeObserver;
 
+// Embla (Carousel) observes its slides to decide what is in view. jsdom has no viewport, so the
+// stub never reports an intersection — which is why the carousel tests assert the disabled
+// arrows rather than a scroll position.
+globalThis.IntersectionObserver ??= class {
+  readonly root = null;
+  readonly rootMargin = "";
+  readonly thresholds: ReadonlyArray<number> = [];
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+} as unknown as typeof IntersectionObserver;
+
 globalThis.DOMRect ??= class {
   constructor(
     public x = 0,
@@ -34,6 +49,12 @@ globalThis.DOMRect ??= class {
 
 // Guarded: this same setup file also loads for the `@vitest-environment node` suites (the
 // contrast gate, the dist-directives check), where there is no DOM and Element is undefined.
+// input-otp positions its caret by asking what sits under the pointer. jsdom has no hit testing,
+// so the real call throws asynchronously — the tests still pass and the run still fails.
+if (typeof document !== "undefined") {
+  document.elementFromPoint ??= () => null;
+}
+
 if (typeof Element !== "undefined") {
   Element.prototype.hasPointerCapture ??= () => false;
   Element.prototype.setPointerCapture ??= () => {};

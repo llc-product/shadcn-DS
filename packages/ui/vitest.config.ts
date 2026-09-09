@@ -20,10 +20,10 @@ export default defineConfig({
         // contrast gate tests its output directly.
         "src/tokens/tokens.ts",
       ],
-      // A RATCHET set just under what the suite actually covers today (98.15 / 89.28 / 97 /
-      // 98.15), not an aspiration. Its job is to fail the build when coverage DROPS. Raise these
+      // A RATCHET set just under what the suite actually covers today (98.24 / 90.4 / 98.15 /
+      // 98.01), not an aspiration. Its job is to fail the build when coverage DROPS. Raise these
       // as tests are added; the one thing never to do is lower them to make CI green.
-      thresholds: { lines: 97, functions: 95, branches: 88, statements: 97 },
+      thresholds: { lines: 97, functions: 97, branches: 89, statements: 97 },
     },
   },
 });

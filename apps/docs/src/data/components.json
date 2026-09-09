@@ -10,7 +10,9 @@
       "skeleton",
       "spinner",
       "toggle",
-      "toggle-group"
+      "toggle-group",
+      "kbd",
+      "button-group"
     ],
     "components": [
       {
@@ -113,6 +115,32 @@
         "variants": null,
         "exports": ["ToggleGroup", "ToggleGroupItem"],
         "sidecar": null
+      },
+      {
+        "name": "kbd",
+        "file": "packages/ui/src/components/kbd/kbd.tsx",
+        "description": "styled <kbd> for keyboard-shortcut hints.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["Kbd", "KbdGroup"],
+        "sidecar": null
+      },
+      {
+        "name": "button-group",
+        "file": "packages/ui/src/components/button-group/button-group.tsx",
+        "description": "joins adjacent buttons into a single visual group.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "buttonGroupVariants",
+          "type ButtonGroupProps",
+          "ButtonGroup",
+          "ButtonGroupText",
+          "ButtonGroupSeparator"
+        ],
+        "sidecar": null
       }
     ]
   },
@@ -126,7 +154,12 @@
       "accordion",
       "table",
       "breadcrumb",
-      "pagination"
+      "pagination",
+      "collapsible",
+      "aspect-ratio",
+      "resizable",
+      "carousel",
+      "item"
     ],
     "components": [
       {
@@ -240,12 +273,100 @@
           "PaginationEllipsis"
         ],
         "sidecar": null
+      },
+      {
+        "name": "collapsible",
+        "file": "packages/ui/src/components/collapsible/collapsible.tsx",
+        "description": "one show/hide region driven by a trigger (Radix Collapsible).",
+        "client": true,
+        "radixBase": "@radix-ui/react-collapsible",
+        "variants": null,
+        "exports": ["Collapsible", "CollapsibleTrigger", "CollapsibleContent"],
+        "sidecar": null
+      },
+      {
+        "name": "aspect-ratio",
+        "file": "packages/ui/src/components/aspect-ratio/aspect-ratio.tsx",
+        "description": "locks a child to a fixed width/height ratio (Radix AspectRatio).",
+        "client": true,
+        "radixBase": "@radix-ui/react-aspect-ratio",
+        "variants": null,
+        "exports": ["AspectRatio"],
+        "sidecar": null
+      },
+      {
+        "name": "resizable",
+        "file": "packages/ui/src/components/resizable/resizable.tsx",
+        "description": "draggable split panes with a keyboard-operable handle (react-resizable-panels).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["ResizablePanelGroup", "ResizablePanel", "ResizableHandle"],
+        "sidecar": null
+      },
+      {
+        "name": "carousel",
+        "file": "packages/ui/src/components/carousel/carousel.tsx",
+        "description": "slide viewport with keyboard navigation, horizontal or vertical (Embla).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "useCarousel",
+          "Carousel",
+          "CarouselContent",
+          "CarouselItem",
+          "CarouselPrevious",
+          "CarouselNext"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "item",
+        "file": "packages/ui/src/components/item/item.tsx",
+        "description": "list-item primitive for menus, settings rows and row-style cards.",
+        "client": false,
+        "radixBase": null,
+        "variants": {
+          "variant": ["default", "outline", "muted"],
+          "size": ["default", "sm"]
+        },
+        "exports": [
+          "itemVariants",
+          "type ItemProps",
+          "Item",
+          "ItemGroup",
+          "ItemSeparator",
+          "itemMediaVariants",
+          "type ItemMediaProps",
+          "ItemMedia",
+          "ItemContent",
+          "ItemTitle",
+          "ItemDescription",
+          "ItemActions",
+          "ItemHeader",
+          "ItemFooter"
+        ],
+        "sidecar": null
       }
     ]
   },
   {
     "title": "Forms",
-    "names": ["checkbox", "radio-group", "switch", "slider", "select"],
+    "names": [
+      "checkbox",
+      "radio-group",
+      "switch",
+      "slider",
+      "select",
+      "native-select",
+      "field",
+      "input-group",
+      "input-otp",
+      "calendar",
+      "date-picker",
+      "combobox"
+    ],
     "components": [
       {
         "name": "checkbox",
@@ -305,12 +426,102 @@
           "SelectSeparator"
         ],
         "sidecar": null
+      },
+      {
+        "name": "native-select",
+        "file": "packages/ui/src/components/native-select/native-select.tsx",
+        "description": "styled native <select>, matching SelectTrigger's token styling.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["NativeSelect"],
+        "sidecar": null
+      },
+      {
+        "name": "field",
+        "file": "packages/ui/src/components/field/field.tsx",
+        "description": "form-field composition primitives for Server-Action + Zod forms.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "FieldSet",
+          "FieldLegend",
+          "FieldGroup",
+          "Field",
+          "FieldContent",
+          "FieldLabel",
+          "FieldDescription",
+          "FieldError",
+          "FieldSeparator"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "input-group",
+        "file": "packages/ui/src/components/input-group/input-group.tsx",
+        "description": "Input wrapper that pairs it with inline leading/trailing addons.",
+        "client": false,
+        "radixBase": null,
+        "variants": {
+          "align": ["inline-start", "inline-end", "block-start", "block-end"]
+        },
+        "exports": [
+          "InputGroup",
+          "InputGroupInput",
+          "inputGroupAddonVariants",
+          "type InputGroupAddonProps",
+          "InputGroupAddon",
+          "InputGroupText",
+          "InputGroupButton"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "input-otp",
+        "file": "packages/ui/src/components/input-otp/input-otp.tsx",
+        "description": "one-time-code field with one slot per character (input-otp).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["InputOTP", "InputOTPGroup", "InputOTPSlot", "InputOTPSeparator"],
+        "sidecar": null
+      },
+      {
+        "name": "calendar",
+        "file": "packages/ui/src/components/calendar/calendar.tsx",
+        "description": "month grid for date selection (react-day-picker).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["type CalendarProps", "Calendar"],
+        "sidecar": null
+      },
+      {
+        "name": "date-picker",
+        "file": "packages/ui/src/components/date-picker/date-picker.tsx",
+        "description": "date field, composed from Popover + Calendar + Button.",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["type DatePickerProps", "DatePicker"],
+        "sidecar": null
+      },
+      {
+        "name": "combobox",
+        "file": "packages/ui/src/components/combobox/combobox.tsx",
+        "description": "searchable single-select, composed from Popover + Command.",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["type ComboboxOption", "Combobox"],
+        "sidecar": null
       }
     ]
   },
   {
     "title": "Feedback",
-    "names": ["alert", "progress", "avatar", "sonner"],
+    "names": ["alert", "progress", "avatar", "sonner", "empty"],
     "components": [
       {
         "name": "alert",
@@ -353,6 +564,25 @@
         "variants": null,
         "exports": ["Toaster", "toast"],
         "sidecar": null
+      },
+      {
+        "name": "empty",
+        "file": "packages/ui/src/components/empty/empty.tsx",
+        "description": "empty-state placeholder primitives.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "Empty",
+          "EmptyHeader",
+          "emptyMediaVariants",
+          "type EmptyMediaProps",
+          "EmptyMedia",
+          "EmptyTitle",
+          "EmptyDescription",
+          "EmptyContent"
+        ],
+        "sidecar": null
       }
     ]
   },
@@ -365,7 +595,12 @@
       "popover",
       "hover-card",
       "tooltip",
-      "dropdown-menu"
+      "dropdown-menu",
+      "context-menu",
+      "menubar",
+      "navigation-menu",
+      "command",
+      "drawer"
     ],
     "components": [
       {
@@ -482,6 +717,144 @@
           "DropdownMenuSubContent",
           "DropdownMenuSubTrigger",
           "DropdownMenuRadioGroup"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "context-menu",
+        "file": "packages/ui/src/components/context-menu/context-menu.tsx",
+        "description": "right-click menu with submenus and checkbox/radio items (Radix ContextMenu).",
+        "client": true,
+        "radixBase": "@radix-ui/react-context-menu",
+        "variants": null,
+        "exports": [
+          "ContextMenu",
+          "ContextMenuTrigger",
+          "ContextMenuGroup",
+          "ContextMenuPortal",
+          "ContextMenuSub",
+          "ContextMenuRadioGroup",
+          "ContextMenuContent",
+          "ContextMenuItem",
+          "ContextMenuCheckboxItem",
+          "ContextMenuRadioItem",
+          "ContextMenuLabel",
+          "ContextMenuSeparator",
+          "ContextMenuShortcut",
+          "ContextMenuSubTrigger",
+          "ContextMenuSubContent"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "menubar",
+        "file": "packages/ui/src/components/menubar/menubar.tsx",
+        "description": "application menu bar with pull-down menus (Radix Menubar).",
+        "client": true,
+        "radixBase": "@radix-ui/react-menubar",
+        "variants": null,
+        "exports": [
+          "MenubarMenu",
+          "MenubarGroup",
+          "MenubarPortal",
+          "MenubarSub",
+          "MenubarRadioGroup",
+          "Menubar",
+          "MenubarTrigger",
+          "MenubarContent",
+          "MenubarItem",
+          "MenubarCheckboxItem",
+          "MenubarRadioItem",
+          "MenubarLabel",
+          "MenubarSeparator",
+          "MenubarShortcut",
+          "MenubarSubTrigger",
+          "MenubarSubContent"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "navigation-menu",
+        "file": "packages/ui/src/components/navigation-menu/navigation-menu.tsx",
+        "description": "site navigation with hoverable content panels (Radix NavigationMenu).",
+        "client": true,
+        "radixBase": "@radix-ui/react-navigation-menu",
+        "variants": null,
+        "exports": [
+          "NavigationMenu",
+          "NavigationMenuList",
+          "NavigationMenuItem",
+          "navigationMenuTriggerStyle",
+          "NavigationMenuTrigger",
+          "NavigationMenuContent",
+          "NavigationMenuLink",
+          "NavigationMenuViewport",
+          "NavigationMenuIndicator"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "command",
+        "file": "packages/ui/src/components/command/command.tsx",
+        "description": "filterable command list (cmdk); pairs with Dialog for a command palette.",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "Command",
+          "CommandDialog",
+          "CommandInput",
+          "CommandList",
+          "CommandEmpty",
+          "CommandGroup",
+          "CommandSeparator",
+          "CommandItem",
+          "CommandShortcut"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "drawer",
+        "file": "packages/ui/src/components/drawer/drawer.tsx",
+        "description": "edge-anchored panel with drag-to-dismiss (Vaul).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "Drawer",
+          "DrawerTrigger",
+          "DrawerPortal",
+          "DrawerClose",
+          "DrawerOverlay",
+          "DrawerContent",
+          "DrawerHeader",
+          "DrawerFooter",
+          "DrawerTitle",
+          "DrawerDescription"
+        ],
+        "sidecar": null
+      }
+    ]
+  },
+  {
+    "title": "Data display",
+    "names": ["chart"],
+    "components": [
+      {
+        "name": "chart",
+        "file": "packages/ui/src/components/chart/chart.tsx",
+        "description": "themed Recharts container, tooltip and legend on the --chart-* tokens.",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "type ChartConfig",
+          "useChart",
+          "ChartContainer",
+          "ChartTooltip",
+          "ChartTooltipContent",
+          "ChartLegend",
+          "ChartLegendContent"
         ],
         "sidecar": null
       }

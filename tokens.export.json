@@ -12,54 +12,199 @@
           "base": {
             "type": "COLOR",
             "description": "Brand primary #ff5722, converted to OKLCH (round-trip verified).",
-            "value": { "Mode 1": "oklch(0.6792 0.2128 36.53)" }
+            "value": {
+              "Mode 1": "oklch(0.6792 0.2128 36.53)"
+            }
           },
           "strong": {
             "type": "COLOR",
             "description": "Darker brand fill for hover / pressed.",
-            "value": { "Mode 1": "oklch(0.52 0.21 36.53)" }
+            "value": {
+              "Mode 1": "oklch(0.52 0.21 36.53)"
+            }
           }
         },
         "neutral": {
-          "0": { "type": "COLOR", "value": { "Mode 1": "oklch(1 0 0)" } },
-          "50": { "type": "COLOR", "value": { "Mode 1": "oklch(0.985 0 0)" } },
-          "100": { "type": "COLOR", "value": { "Mode 1": "oklch(0.97 0 0)" } },
-          "200": { "type": "COLOR", "value": { "Mode 1": "oklch(0.922 0 0)" } },
-          "400": { "type": "COLOR", "value": { "Mode 1": "oklch(0.708 0 0)" } },
+          "0": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(1 0 0)"
+            }
+          },
+          "50": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.985 0 0)"
+            }
+          },
+          "100": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.97 0 0)"
+            }
+          },
+          "200": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.922 0 0)"
+            }
+          },
+          "400": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.708 0 0)"
+            }
+          },
           "500": {
             "type": "COLOR",
             "description": "Was 0.556, the shadcn default. Darkened to 0.54 because --muted-foreground on --muted measured 4.339:1 — below WCAG AA for body text — and that exact pair renders in TabsList (bg-muted + text-muted-foreground) and on Toggle hover. 0.545 was the least change that clears 4.5; 0.54 was taken instead for headroom against browser rounding. Now 4.640:1 on muted, 5.061:1 on white. The step is 0.016 in lightness: not visible, and it was never a design decision, only an inherited default.",
-            "value": { "Mode 1": "oklch(0.54 0 0)" }
+            "value": {
+              "Mode 1": "oklch(0.54 0 0)"
+            }
           },
-          "800": { "type": "COLOR", "value": { "Mode 1": "oklch(0.269 0 0)" } },
-          "900": { "type": "COLOR", "value": { "Mode 1": "oklch(0.205 0 0)" } },
-          "950": { "type": "COLOR", "value": { "Mode 1": "oklch(0.145 0 0)" } }
+          "800": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.269 0 0)"
+            }
+          },
+          "900": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.205 0 0)"
+            }
+          },
+          "950": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.145 0 0)"
+            }
+          }
         },
         "alpha": {
-          "white-12": { "type": "COLOR", "value": { "Mode 1": "oklch(1 0 0 / 12%)" } },
-          "white-15": { "type": "COLOR", "value": { "Mode 1": "oklch(1 0 0 / 15%)" } }
+          "white-12": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(1 0 0 / 12%)"
+            }
+          },
+          "white-15": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(1 0 0 / 15%)"
+            }
+          }
         },
         "red": {
-          "500": { "type": "COLOR", "value": { "Mode 1": "oklch(0.62 0.2 25)" } },
-          "600": { "type": "COLOR", "value": { "Mode 1": "oklch(0.52 0.21 25)" } }
+          "500": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.62 0.2 25)"
+            }
+          },
+          "600": {
+            "type": "COLOR",
+            "value": {
+              "Mode 1": "oklch(0.52 0.21 25)"
+            }
+          }
+        },
+        "chart": {
+          "light-1": {
+            "type": "COLOR",
+            "description": "Chart series 1, light theme. Decorative: a data-series fill/stroke carries no WCAG text obligation.",
+            "value": {
+              "Mode 1": "oklch(0.646 0.222 41.116)"
+            }
+          },
+          "light-2": {
+            "type": "COLOR",
+            "description": "Chart series 2, light theme. Decorative: a data-series fill/stroke carries no WCAG text obligation.",
+            "value": {
+              "Mode 1": "oklch(0.6 0.118 184.704)"
+            }
+          },
+          "light-3": {
+            "type": "COLOR",
+            "description": "Chart series 3, light theme. Decorative: a data-series fill/stroke carries no WCAG text obligation.",
+            "value": {
+              "Mode 1": "oklch(0.398 0.07 227.392)"
+            }
+          },
+          "light-4": {
+            "type": "COLOR",
+            "description": "Chart series 4, light theme. Decorative: a data-series fill/stroke carries no WCAG text obligation.",
+            "value": {
+              "Mode 1": "oklch(0.828 0.189 84.429)"
+            }
+          },
+          "light-5": {
+            "type": "COLOR",
+            "description": "Chart series 5, light theme. Decorative: a data-series fill/stroke carries no WCAG text obligation.",
+            "value": {
+              "Mode 1": "oklch(0.769 0.188 70.08)"
+            }
+          },
+          "dark-1": {
+            "type": "COLOR",
+            "description": "Chart series 1, dark theme. Re-hued rather than re-lightened: the light series loses separation on a dark ground.",
+            "value": {
+              "Mode 1": "oklch(0.488 0.243 264.376)"
+            }
+          },
+          "dark-2": {
+            "type": "COLOR",
+            "description": "Chart series 2, dark theme. Re-hued rather than re-lightened: the light series loses separation on a dark ground.",
+            "value": {
+              "Mode 1": "oklch(0.696 0.17 162.48)"
+            }
+          },
+          "dark-3": {
+            "type": "COLOR",
+            "description": "Chart series 3, dark theme. Re-hued rather than re-lightened: the light series loses separation on a dark ground.",
+            "value": {
+              "Mode 1": "oklch(0.769 0.188 70.08)"
+            }
+          },
+          "dark-4": {
+            "type": "COLOR",
+            "description": "Chart series 4, dark theme. Re-hued rather than re-lightened: the light series loses separation on a dark ground.",
+            "value": {
+              "Mode 1": "oklch(0.627 0.265 303.9)"
+            }
+          },
+          "dark-5": {
+            "type": "COLOR",
+            "description": "Chart series 5, dark theme. Re-hued rather than re-lightened: the light series loses separation on a dark ground.",
+            "value": {
+              "Mode 1": "oklch(0.645 0.246 16.439)"
+            }
+          }
         }
       },
       "border radius": {
         "base": {
           "type": "FLOAT",
           "description": "Base corner radius in px, emitted as rem. --radius-sm / -md / -lg derive from it, so one value moves every corner in the system.",
-          "value": { "Mode 1": 10 }
+          "value": {
+            "Mode 1": 10
+          }
         }
       }
     },
-
     "semantic": {
       "color": {
         "background": {
           "type": "COLOR",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/0" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/950" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/0"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/950"
+            }
           }
         },
         "foreground": {
@@ -69,14 +214,23 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/950"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/50" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/50"
+            }
           }
         },
         "card": {
           "type": "COLOR",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/0" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/900" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/0"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/900"
+            }
           }
         },
         "card-foreground": {
@@ -86,14 +240,23 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/950"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/50" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/50"
+            }
           }
         },
         "popover": {
           "type": "COLOR",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/0" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/900" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/0"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/900"
+            }
           }
         },
         "popover-foreground": {
@@ -103,15 +266,24 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/950"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/50" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/50"
+            }
           }
         },
         "primary": {
           "type": "COLOR",
           "description": "The brand itself, identical in both themes — re-branding is one value at primitives:colors/brand/base. Measures 6.26:1 against the dark ground.",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/brand/base" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/brand/base" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/brand/base"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/brand/base"
+            }
           }
         },
         "primary-strong": {
@@ -122,7 +294,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/brand/strong"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/brand/base" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/brand/base"
+            }
           }
         },
         "primary-foreground": {
@@ -133,7 +308,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/950"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/950" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/950"
+            }
           }
         },
         "secondary": {
@@ -143,7 +321,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/100"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/800" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/800"
+            }
           }
         },
         "secondary-foreground": {
@@ -153,7 +334,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/900"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/50" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/50"
+            }
           }
         },
         "muted": {
@@ -163,7 +347,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/100"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/800" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/800"
+            }
           }
         },
         "muted-foreground": {
@@ -173,7 +360,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/500"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/400" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/400"
+            }
           }
         },
         "accent": {
@@ -183,7 +373,10 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/100"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/800" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/800"
+            }
           }
         },
         "accent-foreground": {
@@ -193,22 +386,37 @@
               "type": "VARIABLE_ALIAS",
               "path": "primitives:colors/neutral/900"
             },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/50" }
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/50"
+            }
           }
         },
         "destructive": {
           "type": "COLOR",
           "description": "A true red, 11.5 degrees from the brand in hue. No value satisfies readable-as-text on both grounds AND meaningfully separated from an orange brand, so it is separated by LIGHTNESS instead. Binding consequence: a destructive action must never be signalled by colour alone (WCAG 1.4.1) — the icon, the verb and the confirm step do the real work.",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/red/600" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/red/500" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/red/600"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/red/500"
+            }
           }
         },
         "destructive-foreground": {
           "type": "COLOR",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/50" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/neutral/950" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/50"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/neutral/950"
+            }
           }
         },
         "border": {
@@ -241,13 +449,83 @@
           "type": "COLOR",
           "description": "Focus ring: 3.16:1 on white — AA for non-text.",
           "value": {
-            "Light": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/brand/base" },
-            "Dark": { "type": "VARIABLE_ALIAS", "path": "primitives:colors/brand/base" }
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/brand/base"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/brand/base"
+            }
+          }
+        },
+        "chart-1": {
+          "type": "COLOR",
+          "value": {
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/light-1"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/dark-1"
+            }
+          }
+        },
+        "chart-2": {
+          "type": "COLOR",
+          "value": {
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/light-2"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/dark-2"
+            }
+          }
+        },
+        "chart-3": {
+          "type": "COLOR",
+          "value": {
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/light-3"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/dark-3"
+            }
+          }
+        },
+        "chart-4": {
+          "type": "COLOR",
+          "value": {
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/light-4"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/dark-4"
+            }
+          }
+        },
+        "chart-5": {
+          "type": "COLOR",
+          "value": {
+            "Light": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/light-5"
+            },
+            "Dark": {
+              "type": "VARIABLE_ALIAS",
+              "path": "primitives:colors/chart/dark-5"
+            }
           }
         }
       }
     },
-
     "typo-base": {
       "typography": {
         "font-family": {
@@ -267,25 +545,45 @@
         }
       }
     },
-
     "motion": {
       "duration": {
-        "fast": { "type": "FLOAT", "value": { "Default": 150 } },
-        "default": { "type": "FLOAT", "value": { "Default": 200 } },
-        "slow": { "type": "FLOAT", "value": { "Default": 300 } }
+        "fast": {
+          "type": "FLOAT",
+          "value": {
+            "Default": 150
+          }
+        },
+        "default": {
+          "type": "FLOAT",
+          "value": {
+            "Default": 200
+          }
+        },
+        "slow": {
+          "type": "FLOAT",
+          "value": {
+            "Default": 300
+          }
+        }
       },
       "easing": {
         "standard": {
           "type": "STRING",
-          "value": { "Default": "cubic-bezier(0.4, 0, 0.2, 1)" }
+          "value": {
+            "Default": "cubic-bezier(0.4, 0, 0.2, 1)"
+          }
         },
         "accelerate": {
           "type": "STRING",
-          "value": { "Default": "cubic-bezier(0.4, 0, 1, 1)" }
+          "value": {
+            "Default": "cubic-bezier(0.4, 0, 1, 1)"
+          }
         },
         "decelerate": {
           "type": "STRING",
-          "value": { "Default": "cubic-bezier(0, 0, 0.2, 1)" }
+          "value": {
+            "Default": "cubic-bezier(0, 0, 0.2, 1)"
+          }
         }
       }
     }
