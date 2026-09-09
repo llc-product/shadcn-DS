@@ -1,0 +1,44 @@
+{
+  "name": "@digitaltwin/design-system-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DigitalTwin Design System \u2014 React/Next UI kit + design tokens",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:tokens": "node scripts/build-tokens.mjs && prettier --log-level warn --write \"packages/ui/src/styles/tokens.css\" \"packages/ui/src/tokens/tokens.ts\"",
+    "sync:tokens": "node scripts/sync-tokens.mjs && npm run build:tokens",
+    "check:figma-drift": "node scripts/check-figma-drift.mjs",
+    "build:catalog": "node scripts/build-catalog.mjs && prettier --log-level warn --write docs/components.md",
+    "docs:manifest": "node scripts/gen-docs-manifest.mjs && prettier --log-level warn --write \"apps/docs/src/data/*.json\"",
+    "build": "npm run build:tokens && npm run build -w @digitaltwin/design-system",
+    "dev": "npm run dev -w @digitaltwin/design-system",
+    "docs:dev": "npm run docs:manifest && npm run build && npm run dev -w @digitaltwin/design-system-docs",
+    "docs:build": "npm run docs:manifest && npm run build && npm run build -w @digitaltwin/design-system-docs",
+    "test": "npm run test -w @digitaltwin/design-system",
+    "test:coverage": "npm run test:coverage -w @digitaltwin/design-system",
+    "typecheck": "npm run typecheck -w @digitaltwin/design-system",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run format:check && npm run lint && npm run build:tokens && npm run typecheck && npm run build && npm run test:coverage"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.55.0"
+  },
+  "engines": {
+    "node": ">=22.22.2"
+  }
+}

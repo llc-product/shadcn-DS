@@ -1,0 +1,21 @@
+/* base.css — the opinionated base layer. Hand-written; tokens.css is the generated half.
+ *
+ * Kept separate on purpose. An app that wants the palette but owns its own reset imports
+ * `@digitaltwin/design-system/tokens.css` and stops there; `styles.css` is tokens + this.
+ */
+
+@layer base {
+  /* Tailwind v4 removed the v3 default border colour, so an unqualified `border` utility would
+   * draw currentColor. Every component in this library writes plain `border` and expects the
+   * token — this is what makes that true. */
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    margin: 0;
+  }
+}

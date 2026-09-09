@@ -1,0 +1,11 @@
+node_modules
+dist
+out
+.next
+coverage
+
+# Lockfiles are generated; formatting them creates noise and merge conflicts.
+package-lock.json
+
+# Raw Figma export — a machine-written snapshot, diffed as-is so a re-sync shows real changes.
+tokens.raw.json

@@ -1,0 +1,516 @@
+[
+  {
+    "title": "Primitives",
+    "names": [
+      "button",
+      "input",
+      "textarea",
+      "label",
+      "badge",
+      "skeleton",
+      "spinner",
+      "toggle",
+      "toggle-group"
+    ],
+    "components": [
+      {
+        "name": "button",
+        "file": "packages/ui/src/components/button/button.tsx",
+        "description": "design-system Button (CVA variants + tokens, asChild via Slot).",
+        "client": false,
+        "radixBase": "@radix-ui/react-slot",
+        "variants": {
+          "variant": ["default", "secondary", "outline", "ghost", "destructive", "link"],
+          "size": ["sm", "default", "lg", "icon"]
+        },
+        "exports": ["Button", "buttonVariants", "type ButtonProps"],
+        "sidecar": {
+          "guidance": "Reach for `asChild` rather than a new component whenever the thing being pressed is really a link — `<Button asChild><Link href=\"/settings\">Settings</Link></Button>`. The `link` variant is for a button that LOOKS like a link inside a sentence; it is still a button, and it still does something rather than going somewhere.",
+          "example": "<Button variant=\"destructive\" size=\"sm\">Delete files</Button>",
+          "notes": "The `link` variant uses --primary-strong, not --primary. The brand measures 3.164:1 on a light ground: enough for a focus ring, not enough for text."
+        }
+      },
+      {
+        "name": "input",
+        "file": "packages/ui/src/components/input/input.tsx",
+        "description": "single-line text field, token-styled, native <input> underneath.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["Input"],
+        "sidecar": null
+      },
+      {
+        "name": "textarea",
+        "file": "packages/ui/src/components/textarea/textarea.tsx",
+        "description": "multi-line text field, token-styled, native <textarea> underneath.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["Textarea"],
+        "sidecar": null
+      },
+      {
+        "name": "label",
+        "file": "packages/ui/src/components/label/label.tsx",
+        "description": "form label bound to a control (Radix Label).",
+        "client": true,
+        "radixBase": "@radix-ui/react-label",
+        "variants": null,
+        "exports": ["Label"],
+        "sidecar": null
+      },
+      {
+        "name": "badge",
+        "file": "packages/ui/src/components/badge/badge.tsx",
+        "description": "small status or count label (CVA variants, not interactive).",
+        "client": false,
+        "radixBase": null,
+        "variants": {
+          "variant": ["default", "secondary", "outline", "destructive"]
+        },
+        "exports": ["Badge", "badgeVariants", "type BadgeProps"],
+        "sidecar": null
+      },
+      {
+        "name": "skeleton",
+        "file": "packages/ui/src/components/skeleton/skeleton.tsx",
+        "description": "pulsing placeholder for content that has not arrived yet.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["Skeleton"],
+        "sidecar": null
+      },
+      {
+        "name": "spinner",
+        "file": "packages/ui/src/components/spinner/spinner.tsx",
+        "description": "indeterminate loading indicator, announced as a live status.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["Spinner"],
+        "sidecar": null
+      },
+      {
+        "name": "toggle",
+        "file": "packages/ui/src/components/toggle/toggle.tsx",
+        "description": "two-state pressable button (Radix Toggle).",
+        "client": true,
+        "radixBase": "@radix-ui/react-toggle",
+        "variants": {
+          "variant": ["default", "outline"]
+        },
+        "exports": ["Toggle", "toggleVariants"],
+        "sidecar": null
+      },
+      {
+        "name": "toggle-group",
+        "file": "packages/ui/src/components/toggle-group/toggle-group.tsx",
+        "description": "a set of toggles, single- or multi-select (Radix ToggleGroup).",
+        "client": true,
+        "radixBase": "@radix-ui/react-toggle-group",
+        "variants": null,
+        "exports": ["ToggleGroup", "ToggleGroupItem"],
+        "sidecar": null
+      }
+    ]
+  },
+  {
+    "title": "Containers / layout",
+    "names": [
+      "card",
+      "separator",
+      "scroll-area",
+      "tabs",
+      "accordion",
+      "table",
+      "breadcrumb",
+      "pagination"
+    ],
+    "components": [
+      {
+        "name": "card",
+        "file": "packages/ui/src/components/card/card.tsx",
+        "description": "composable Card primitives.",
+        "client": false,
+        "radixBase": "@radix-ui/react-slot",
+        "variants": null,
+        "exports": [
+          "Card",
+          "CardHeader",
+          "CardTitle",
+          "CardDescription",
+          "CardContent",
+          "CardFooter"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "separator",
+        "file": "packages/ui/src/components/separator/separator.tsx",
+        "description": "semantic or decorative rule between content (Radix Separator).",
+        "client": true,
+        "radixBase": "@radix-ui/react-separator",
+        "variants": null,
+        "exports": ["Separator"],
+        "sidecar": null
+      },
+      {
+        "name": "scroll-area",
+        "file": "packages/ui/src/components/scroll-area/scroll-area.tsx",
+        "description": "scroll container with styled, overlay-free scrollbars (Radix ScrollArea).",
+        "client": true,
+        "radixBase": "@radix-ui/react-scroll-area",
+        "variants": null,
+        "exports": ["ScrollArea", "ScrollBar"],
+        "sidecar": null
+      },
+      {
+        "name": "tabs",
+        "file": "packages/ui/src/components/tabs/tabs.tsx",
+        "description": "one panel visible at a time, from a list of triggers (Radix Tabs).",
+        "client": true,
+        "radixBase": "@radix-ui/react-tabs",
+        "variants": null,
+        "exports": ["Tabs", "TabsList", "TabsTrigger", "TabsContent"],
+        "sidecar": null
+      },
+      {
+        "name": "accordion",
+        "file": "packages/ui/src/components/accordion/accordion.tsx",
+        "description": "vertically stacked, collapsible sections (Radix Accordion).",
+        "client": true,
+        "radixBase": "@radix-ui/react-accordion",
+        "variants": null,
+        "exports": ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent"],
+        "sidecar": null
+      },
+      {
+        "name": "table",
+        "file": "packages/ui/src/components/table/table.tsx",
+        "description": "semantic data table with a scroll wrapper so a wide one cannot break the page.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "Table",
+          "TableHeader",
+          "TableBody",
+          "TableFooter",
+          "TableHead",
+          "TableRow",
+          "TableCell",
+          "TableCaption"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "breadcrumb",
+        "file": "packages/ui/src/components/breadcrumb/breadcrumb.tsx",
+        "description": "trail of ancestor links ending in the current page.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "Breadcrumb",
+          "BreadcrumbList",
+          "BreadcrumbItem",
+          "BreadcrumbLink",
+          "BreadcrumbPage",
+          "BreadcrumbSeparator",
+          "BreadcrumbEllipsis"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "pagination",
+        "file": "packages/ui/src/components/pagination/pagination.tsx",
+        "description": "page navigation built from Button variants, not a new control.",
+        "client": false,
+        "radixBase": null,
+        "variants": null,
+        "exports": [
+          "Pagination",
+          "PaginationContent",
+          "PaginationItem",
+          "PaginationLink",
+          "PaginationPrevious",
+          "PaginationNext",
+          "PaginationEllipsis"
+        ],
+        "sidecar": null
+      }
+    ]
+  },
+  {
+    "title": "Forms",
+    "names": ["checkbox", "radio-group", "switch", "slider", "select"],
+    "components": [
+      {
+        "name": "checkbox",
+        "file": "packages/ui/src/components/checkbox/checkbox.tsx",
+        "description": "binary control with an indeterminate state (Radix Checkbox).",
+        "client": true,
+        "radixBase": "@radix-ui/react-checkbox",
+        "variants": null,
+        "exports": ["Checkbox"],
+        "sidecar": null
+      },
+      {
+        "name": "radio-group",
+        "file": "packages/ui/src/components/radio-group/radio-group.tsx",
+        "description": "one-of-many selection (Radix RadioGroup).",
+        "client": true,
+        "radixBase": "@radix-ui/react-radio-group",
+        "variants": null,
+        "exports": ["RadioGroup", "RadioGroupItem"],
+        "sidecar": null
+      },
+      {
+        "name": "switch",
+        "file": "packages/ui/src/components/switch/switch.tsx",
+        "description": "on/off toggle for a setting that applies immediately (Radix Switch).",
+        "client": true,
+        "radixBase": "@radix-ui/react-switch",
+        "variants": null,
+        "exports": ["Switch"],
+        "sidecar": null
+      },
+      {
+        "name": "slider",
+        "file": "packages/ui/src/components/slider/slider.tsx",
+        "description": "numeric range input, single or multi-thumb (Radix Slider).",
+        "client": true,
+        "radixBase": "@radix-ui/react-slider",
+        "variants": null,
+        "exports": ["Slider"],
+        "sidecar": null
+      },
+      {
+        "name": "select",
+        "file": "packages/ui/src/components/select/select.tsx",
+        "description": "single-select listbox with keyboard typeahead (Radix Select).",
+        "client": true,
+        "radixBase": "@radix-ui/react-select",
+        "variants": null,
+        "exports": [
+          "Select",
+          "SelectGroup",
+          "SelectValue",
+          "SelectTrigger",
+          "SelectContent",
+          "SelectLabel",
+          "SelectItem",
+          "SelectSeparator"
+        ],
+        "sidecar": null
+      }
+    ]
+  },
+  {
+    "title": "Feedback",
+    "names": ["alert", "progress", "avatar", "sonner"],
+    "components": [
+      {
+        "name": "alert",
+        "file": "packages/ui/src/components/alert/alert.tsx",
+        "description": "inline message block, announced as a live alert.",
+        "client": false,
+        "radixBase": null,
+        "variants": {
+          "variant": ["default", "destructive"]
+        },
+        "exports": ["Alert", "AlertTitle", "AlertDescription", "alertVariants"],
+        "sidecar": null
+      },
+      {
+        "name": "progress",
+        "file": "packages/ui/src/components/progress/progress.tsx",
+        "description": "determinate progress bar (Radix Progress).",
+        "client": true,
+        "radixBase": "@radix-ui/react-progress",
+        "variants": null,
+        "exports": ["Progress"],
+        "sidecar": null
+      },
+      {
+        "name": "avatar",
+        "file": "packages/ui/src/components/avatar/avatar.tsx",
+        "description": "user image with a text fallback while it loads or fails (Radix Avatar).",
+        "client": true,
+        "radixBase": "@radix-ui/react-avatar",
+        "variants": null,
+        "exports": ["Avatar", "AvatarImage", "AvatarFallback"],
+        "sidecar": null
+      },
+      {
+        "name": "sonner",
+        "file": "packages/ui/src/components/sonner/sonner.tsx",
+        "description": "toast host and the toast() imperative API (Sonner).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["Toaster", "toast"],
+        "sidecar": null
+      }
+    ]
+  },
+  {
+    "title": "Overlays",
+    "names": [
+      "dialog",
+      "sheet",
+      "alert-dialog",
+      "popover",
+      "hover-card",
+      "tooltip",
+      "dropdown-menu"
+    ],
+    "components": [
+      {
+        "name": "dialog",
+        "file": "packages/ui/src/components/dialog/dialog.tsx",
+        "description": "modal overlay with focus trap and scroll lock (Radix Dialog).",
+        "client": true,
+        "radixBase": "@radix-ui/react-dialog",
+        "variants": null,
+        "exports": [
+          "Dialog",
+          "DialogTrigger",
+          "DialogClose",
+          "DialogPortal",
+          "DialogOverlay",
+          "DialogContent",
+          "DialogHeader",
+          "DialogFooter",
+          "DialogTitle",
+          "DialogDescription"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "sheet",
+        "file": "packages/ui/src/components/sheet/sheet.tsx",
+        "description": "dialog that enters from an edge of the viewport (Radix Dialog).",
+        "client": true,
+        "radixBase": "@radix-ui/react-dialog",
+        "variants": {
+          "side": ["top", "bottom", "left", "right"]
+        },
+        "exports": [
+          "Sheet",
+          "SheetTrigger",
+          "SheetClose",
+          "SheetContent",
+          "SheetHeader",
+          "SheetFooter",
+          "SheetTitle",
+          "SheetDescription"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "alert-dialog",
+        "file": "packages/ui/src/components/alert-dialog/alert-dialog.tsx",
+        "description": "modal that interrupts and requires a choice (Radix AlertDialog).",
+        "client": true,
+        "radixBase": "@radix-ui/react-alert-dialog",
+        "variants": null,
+        "exports": [
+          "AlertDialog",
+          "AlertDialogTrigger",
+          "AlertDialogContent",
+          "AlertDialogHeader",
+          "AlertDialogFooter",
+          "AlertDialogTitle",
+          "AlertDialogDescription",
+          "AlertDialogAction",
+          "AlertDialogCancel"
+        ],
+        "sidecar": null
+      },
+      {
+        "name": "popover",
+        "file": "packages/ui/src/components/popover/popover.tsx",
+        "description": "floating panel anchored to a trigger, focusable (Radix Popover).",
+        "client": true,
+        "radixBase": "@radix-ui/react-popover",
+        "variants": null,
+        "exports": ["Popover", "PopoverTrigger", "PopoverAnchor", "PopoverContent"],
+        "sidecar": null
+      },
+      {
+        "name": "hover-card",
+        "file": "packages/ui/src/components/hover-card/hover-card.tsx",
+        "description": "rich preview shown on hover, for sighted pointer users only (Radix HoverCard).",
+        "client": true,
+        "radixBase": "@radix-ui/react-hover-card",
+        "variants": null,
+        "exports": ["HoverCard", "HoverCardTrigger", "HoverCardContent"],
+        "sidecar": null
+      },
+      {
+        "name": "tooltip",
+        "file": "packages/ui/src/components/tooltip/tooltip.tsx",
+        "description": "short label on hover or focus, never the only source of information (Radix Tooltip).",
+        "client": true,
+        "radixBase": "@radix-ui/react-tooltip",
+        "variants": null,
+        "exports": ["Tooltip", "TooltipProvider", "TooltipTrigger", "TooltipContent"],
+        "sidecar": null
+      },
+      {
+        "name": "dropdown-menu",
+        "file": "packages/ui/src/components/dropdown-menu/dropdown-menu.tsx",
+        "description": "menu anchored to a trigger, with items, checkboxes, radios and submenus (Radix DropdownMenu).",
+        "client": true,
+        "radixBase": "@radix-ui/react-dropdown-menu",
+        "variants": null,
+        "exports": [
+          "DropdownMenu",
+          "DropdownMenuTrigger",
+          "DropdownMenuContent",
+          "DropdownMenuItem",
+          "DropdownMenuCheckboxItem",
+          "DropdownMenuRadioItem",
+          "DropdownMenuLabel",
+          "DropdownMenuSeparator",
+          "DropdownMenuShortcut",
+          "DropdownMenuGroup",
+          "DropdownMenuSub",
+          "DropdownMenuSubContent",
+          "DropdownMenuSubTrigger",
+          "DropdownMenuRadioGroup"
+        ],
+        "sidecar": null
+      }
+    ]
+  },
+  {
+    "title": "Theme",
+    "names": ["theme-provider", "theme-toggle"],
+    "components": [
+      {
+        "name": "theme-provider",
+        "file": "packages/ui/src/components/theme-provider/theme-provider.tsx",
+        "description": "wraps next-themes (class-based dark mode).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["ThemeProvider"],
+        "sidecar": null
+      },
+      {
+        "name": "theme-toggle",
+        "file": "packages/ui/src/components/theme-toggle/theme-toggle.tsx",
+        "description": "light/dark switch (uses next-themes).",
+        "client": true,
+        "radixBase": null,
+        "variants": null,
+        "exports": ["ThemeToggle", "type ThemeToggleProps"],
+        "sidecar": null
+      }
+    ]
+  }
+]

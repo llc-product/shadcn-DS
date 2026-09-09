@@ -1,0 +1,9 @@
+# Publishing is done by CI, which writes a real .npmrc from CI_JOB_TOKEN (see .gitlab-ci.yml).
+# This file documents the shape for a local publish; copy to .npmrc and fill in a token.
+#
+# Both the default registry AND the scoped registry are pinned, deliberately: a publish must
+# never be able to reach npmjs.org even if the package name were misresolved.
+#
+# registry=https://<gitlab-host>/api/v4/projects/<PROJECT_ID>/packages/npm/
+# @digitaltwin:registry=https://<gitlab-host>/api/v4/projects/<PROJECT_ID>/packages/npm/
+# //<gitlab-host>/api/v4/projects/<PROJECT_ID>/packages/npm/:_authToken=<TOKEN>

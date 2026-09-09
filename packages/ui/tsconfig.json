@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "allowJs": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "*.ts", "../../scripts/lib/**/*.mjs"],
+  "exclude": ["node_modules", "dist"]
+}

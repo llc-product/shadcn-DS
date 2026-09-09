@@ -1,0 +1,4 @@
+{
+  "$placeholder": "AWAITING FIGMA. Replace this file with the raw variables dump for the React DS collection, then run `npm run sync:tokens`. Shape: { \"tokens\": { \"<collection>\": { ...nested groups..., leaf: { type, value: { <mode>: literal | {type:'VARIABLE_ALIAS', id} } } } } } — i.e. exactly what the Figma MCP export_tokens tool emits, unfiltered.",
+  "tokens": {}
+}

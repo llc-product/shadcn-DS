@@ -1,0 +1,5 @@
+{
+  "guidance": "Reach for `asChild` rather than a new component whenever the thing being pressed is really a link — `<Button asChild><Link href=\"/settings\">Settings</Link></Button>`. The `link` variant is for a button that LOOKS like a link inside a sentence; it is still a button, and it still does something rather than going somewhere.",
+  "example": "<Button variant=\"destructive\" size=\"sm\">Delete files</Button>",
+  "notes": "The `link` variant uses --primary-strong, not --primary. The brand measures 3.164:1 on a light ground: enough for a focus ring, not enough for text."
+}

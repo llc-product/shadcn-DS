@@ -1,0 +1,15 @@
+/* index.css — what `@digitaltwin/design-system/styles.css` resolves to.
+ *
+ * Import it AFTER `@import "tailwindcss"` in the consuming app, and point Tailwind at the
+ * package's compiled JS so it can see the class names the components use:
+ *
+ *   @import "tailwindcss";
+ *   @import "@digitaltwin/design-system/styles.css";
+ *   @source "../../node_modules/@digitaltwin/design-system/dist";
+ *
+ * The `@source` line is not optional. Tailwind v4 scans source files to decide which utilities to
+ * emit, and it skips node_modules by default — without it the components render unstyled.
+ */
+
+@import "./tokens.css";
+@import "./base.css";

@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* The design system's tokens and base layer. This is the exact three-line contract a consuming
+ * app follows — the docs site is a real consumer, not a special case, which is the point of
+ * building it in this repo. */
+@import "@digitaltwin/design-system/styles.css";
+
+/* Tailwind v4 decides which utilities to emit by SCANNING SOURCE FILES, and it skips node_modules
+ * by default. Without this line the components mount, carry all the right class names, and render
+ * completely unstyled — with no error anywhere. It is the single easiest thing to get wrong when
+ * adopting this package.
+ *
+ * The path goes through node_modules on purpose, even inside this workspace: it exercises the
+ * same resolution a real installation uses. */
+@source "../../../../node_modules/@digitaltwin/design-system/dist";
