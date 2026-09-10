@@ -23,47 +23,21 @@
  * Anything marked `"private": true` is skipped — that is npm's own opt-out, and it is how
  * apps/docs stays a consumer rather than a package.
  */
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { workspacePackages } from "./lib/workspaces.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCOPE = "@digitaltwin/";
 
 const read = (file) => JSON.parse(readFileSync(file, "utf8"));
 
-/** Every workspace folder named by the root manifest's `workspaces` globs. */
-function workspaceManifests() {
-  const { workspaces = [] } = read(join(ROOT, "package.json"));
-  const out = [];
-
-  for (const pattern of workspaces) {
-    // The globs in use are exactly `<dir>/*`. Anything fancier should fail loudly rather than
-    // silently matching nothing, because "matched nothing" is indistinguishable from "all clear".
-    if (!pattern.endsWith("/*")) {
-      throw new Error(
-        `assert-publishable: unsupported workspace pattern "${pattern}". ` +
-          `Only "<dir>/*" is understood; teach this script the new shape rather than ` +
-          `letting it skip a package.`,
-      );
-    }
-    const dir = join(ROOT, pattern.slice(0, -2));
-    if (!existsSync(dir)) continue;
-
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      const manifest = join(dir, entry.name, "package.json");
-      if (existsSync(manifest)) out.push(manifest);
-    }
-  }
-  return out;
-}
-
 const problems = [];
 let checked = 0;
 
-for (const file of workspaceManifests()) {
-  const pkg = read(file);
+for (const { manifest: file, pkg } of workspacePackages(ROOT)) {
   const where = file.slice(ROOT.length + 1).replaceAll("\\", "/");
 
   if (pkg.private === true) continue;

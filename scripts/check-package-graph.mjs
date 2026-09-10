@@ -31,6 +31,8 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { workspacePackages } from "./lib/workspaces.mjs";
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCOPE = "@digitaltwin/";
 
@@ -55,37 +57,8 @@ const LABELS = {
 const read = (file) => readFileSync(file, "utf8");
 const readJson = (file) => JSON.parse(read(file));
 
-/** Directories matching a `a/b` or `a/b/c` workspace pattern, with their manifests. */
-function expand(base, depth) {
-  if (!existsSync(base)) return [];
-  const entries = readdirSync(base, { withFileTypes: true }).filter((e) =>
-    e.isDirectory(),
-  );
-  if (depth > 1) return entries.flatMap((e) => expand(join(base, e.name), depth - 1));
-  return entries
-    .map((e) => join(base, e.name))
-    .filter((dir) => existsSync(join(dir, "package.json")));
-}
-
-function workspaces() {
-  const { workspaces: patterns = [] } = readJson(join(ROOT, "package.json"));
-  const out = [];
-  for (const pattern of patterns) {
-    const parts = pattern.split("/");
-    const stars = parts.filter((p) => p === "*").length;
-    if (stars === 0 || parts.slice(-stars).some((p) => p !== "*")) {
-      throw new Error(`unsupported workspace pattern "${pattern}"`);
-    }
-    const base = join(ROOT, ...parts.slice(0, parts.length - stars));
-    for (const dir of expand(base, stars)) {
-      out.push({ dir, pkg: readJson(join(dir, "package.json")) });
-    }
-  }
-  return out;
-}
-
 const problems = [];
-const packages = workspaces();
+const packages = workspacePackages(ROOT);
 
 // ── 1. cycles ───────────────────────────────────────────────────────────────────────────────────
 const graph = new Map();
