@@ -98,9 +98,9 @@ ordinary dependencies, as the other twenty-one already were.
 
 - Figma has no variable collection for the React DS, so `tokens.export.json` is hand-seeded.
   `sync-tokens.mjs` and `check-figma-drift.mjs` are written and wait for it.
-- **`animate-in`, `animate-out` and `animate-caret-blink` are not defined anywhere.** Five modules
-  reach for them — `accordion`, `collapsible`, `dialog`, `navigation-menu`, `input-otp` — and the
-  classes are inert: the components open and close correctly, without a transition. They come from
-  `tw-animate-css`, which neither this package nor the boilerplate installs. Predates the port;
-  the fix is a decision about which animation layer this library owns.
+- ~~`animate-in`, `animate-out` and `animate-caret-blink` are not defined anywhere.~~ **Fixed.**
+  They are declared in `base.css` as `--animate-*` theme variables driven by the motion tokens,
+  and `animations.test.ts` now refuses an `animate-*` class that is neither a Tailwind built-in
+  nor declared there. `tw-animate-css` is still not a dependency: what the components actually use
+  is three animations and no modifiers, and that library's value is the modifier system.
 - No git remote, so nothing is published yet. Consume through `file:`.

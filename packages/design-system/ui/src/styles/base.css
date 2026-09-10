@@ -4,6 +4,73 @@
  * `@digitaltwin/design-system/tokens.css` and stops there; `styles.css` is tokens + this.
  */
 
+/* ── Enter/exit animation ────────────────────────────────────────────────────────────────────────
+ * `animate-in`, `animate-out` and `animate-caret-blink` are written HERE because nothing else
+ * defined them. Six components reached for the first two and one for the third, and every class
+ * was inert: the components opened and closed correctly, with no transition and no error. They
+ * come from `tw-animate-css` in the shadcn sources these were adapted from, and that package was
+ * never installed.
+ *
+ * Hand-written rather than adding the dependency, because what is actually used is three
+ * animations and no modifiers — no `fade-in-0`, no `zoom-in-95`, no `slide-in-from-top-2`. That
+ * library's value is the modifier system; paying for it to get three keyframes would be the wrong
+ * trade, and it would also bring its own durations instead of these tokens.
+ *
+ * Declared as `--animate-*` theme variables, which is how Tailwind v4 generates an `animate-`
+ * utility. The keyframes sit inside `@theme` so they are emitted only when a utility that needs
+ * them is actually used.
+ */
+@theme {
+  --animate-in: dt-enter var(--duration-fast) var(--ease-decelerate);
+  --animate-out: dt-exit var(--duration-fast) var(--ease-accelerate);
+  /* The duration is baked in rather than left to a `duration-*` utility: in Tailwind v4 that sets
+   * transition-duration, not animation-duration, so the class the caret used to carry did nothing.
+   */
+  --animate-caret-blink: dt-caret-blink 1s var(--ease-standard) infinite;
+
+  /* Enter decelerates in, exit accelerates out — the pair the motion tokens are named for. The
+   * scale is deliberately small: these wrap overlays and disclosure regions, and a large one reads
+   * as a bounce on a menu the user opened on purpose. */
+  @keyframes dt-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes dt-exit {
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  /* Long holds at each end, a quick pass between: a caret that spends equal time on and off reads
+   * as a flicker rather than a cursor. */
+  @keyframes dt-caret-blink {
+    0%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+/* Motion is a preference, not a decoration. A user who asked their system to reduce it must not
+ * be handed a scaling overlay — and the components must still work, so the animation is removed
+ * rather than the state change. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .animate-out,
+  .animate-caret-blink {
+    animation: none;
+  }
+}
+
 @layer base {
   /* Tailwind v4 removed the v3 default border colour, so an unqualified `border` utility would
    * draw currentColor. Every component in this library writes plain `border` and expects the
