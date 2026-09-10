@@ -8,20 +8,23 @@
 // Every value is also a default, not a mandate. The packages that use them take them as
 // configuration, so an app with a different backend overrides rather than forks.
 
-/** Cookie the browser carries; HttpOnly, so nothing in JS ever reads it. */
-export const ACCESS_COOKIE = "access_token";
-export const REFRESH_COOKIE = "refresh_token";
+/**
+ * The app's own session cookie — the WRAPPER holding the backend's opaque cookie, not the
+ * backend's own.
+ *
+ * It clears the bar: the route that sets it and the edge proxy that reads it must say the same
+ * word, in bundles that share no code, or auth silently fails for everyone.
+ *
+ * HttpOnly, so nothing in JS ever reads it.
+ */
+export const SESSION_COOKIE = "session";
 
 /**
- * Headers the BFF uses to forward a VERIFIED identity to an internal backend.
- *
- * The backend may trust these only because they arrive from the BFF over a trusted network. They
- * are named here so both ends read the same list; the values are never caller-supplied.
+ * Seven days. Longer than the backend's own session is expected to be, on purpose: the backend
+ * decides when a session ends, and a shorter wrapper here would sign people out early for reasons
+ * nothing on the backend could explain.
  */
-export const IDENTITY_HEADERS = {
-  userId: "x-user-id",
-  role: "x-user-role",
-} as const;
+export const SESSION_TTL_S = 60 * 60 * 24 * 7;
 
 /** Locales the apps ship. The first is the default. */
 export const LOCALES = ["en", "es", "vi", "zh"] as const;

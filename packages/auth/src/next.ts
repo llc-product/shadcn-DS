@@ -1,10 +1,8 @@
-// @digitaltwin/auth/next — SERVER-side auth glue: HttpOnly cookies + redirect, on top of the
-// runtime-agnostic JWT core at the package root. Cookie-only model: the browser never sees a token in
-// JS; cookies ride along automatically (same origin).
+// @digitaltwin/auth/next — SERVER-side session plumbing, on top of the runtime-agnostic half.
 //
 // This module imports `next/*` and `server-only`, which is exactly why it is a separate subpath:
 // the package's `exports` map offers no way to reach it from the root, so an edge bundle or a
-// client component cannot pull next/headers in by importing the package name.
+// client component cannot pull `next/headers` in by importing the package name.
 //
 // What it must NOT know is anything about one app's routing or i18n. `onUnauthenticatedPage` is
 // injected for that reason: a bare "/signin" is not a real route in an app whose every page lives
@@ -12,26 +10,23 @@
 import "server-only";
 import { cookies } from "next/headers";
 import type { NextResponse } from "next/server";
-import type { Session, TokenType } from "./jwt.js";
 
-// Thrown by assertSession() so a route handler can answer 401 instead of redirecting.
-export class UnauthorizedError extends Error {
-  constructor() {
-    super("Unauthorized");
-    this.name = "UnauthorizedError";
-  }
-}
+import { UnauthorizedError, type Session } from "./session.js";
 
 export type SessionConfig = {
-  verifyToken: (token: string | undefined, expected?: TokenType) => Promise<Session>;
-  cookieNames: { access: string; refresh: string };
-  ttlS: { access: number; refresh: number };
+  /** Name of THIS app's cookie — the wrapper, not the backend's own. */
+  cookieName: string;
+  /**
+   * How long the browser holds the wrapper. Set no shorter than the backend's own session, so the
+   * backend is what decides when a session ends rather than this app expiring it early.
+   */
+  ttlS: number;
   /**
    * What to do when a PAGE render finds no session. The app calls Next's `redirect()` itself
-   * rather than handing this module a path string, and that is deliberate: `typedRoutes: true`
-   * checks the route where it is WRITTEN, and a path laundered through a `() => string` config
-   * arrives here as plain text that nothing can verify. Passing the action keeps the check at the
-   * app's call site, and keeps `next/navigation` out of this module entirely.
+   * rather than handing this module a path string: `typedRoutes: true` checks the route where it
+   * is WRITTEN, and a path laundered through a `() => string` config arrives here as plain text
+   * that nothing can verify. Passing the action keeps the check at the app's call site, and keeps
+   * `next/navigation` out of this module entirely.
    */
   onUnauthenticatedPage: () => Promise<never> | never;
   /** Defaults to "only over HTTPS in production". */
@@ -39,37 +34,42 @@ export type SessionConfig = {
 };
 
 export function createSessionHelpers(config: SessionConfig) {
-  const { verifyToken, cookieNames, ttlS } = config;
   const isSecure = config.isSecure ?? (() => process.env.NODE_ENV === "production");
 
-  // Real verification — invalid/expired/missing access token → null (deny-by-default).
-  //
-  // "access" is passed EXPLICITLY, not left to the default. The `typ` claim exists so a refresh
-  // token cannot be replayed as an access token, and relying on a default puts that guarantee
-  // inside a function this module does not own: any injected `verifyToken` that drops the default
-  // — a test double, an adapter, a second implementation written against the published
-  // `SessionConfig` where `expected?` reads as "optional, ignore it" — would accept a 7-day
-  // refresh token out of the access cookie. Both cookies are set on the same path, so that is a
-  // 15-minute session turned into a 7-day one.
+  /**
+   * Is a session being held? Presence only — see the note on `Session`.
+   *
+   * An empty string counts as absent: that is what a cleared cookie looks like before the browser
+   * drops it, and sending `Cookie: ` onward would be a request with no session dressed up as one
+   * that has one.
+   */
   async function getSession(): Promise<Session> {
-    return verifyToken((await cookies()).get(cookieNames.access)?.value, "access");
+    const value = (await cookies()).get(config.cookieName)?.value;
+    return value ? { backendCookie: value } : null;
   }
 
-  // Defense-in-depth for the data layer when rendering a PAGE (RSC): no session → send the user
-  // to sign-in. Only valid where a redirect is a sensible answer, i.e. during page rendering.
+  /**
+   * The guard for a PAGE render (RSC): no session → send the visitor to sign-in.
+   *
+   * Only valid where a redirect is a sensible answer. A route handler wants `assertSession`.
+   */
   async function requireSession(): Promise<NonNullable<Session>> {
     const session = await getSession();
     if (session) return session;
 
     await config.onUnauthenticatedPage();
     // Unreachable: redirect() throws. The throw is what tells the compiler the function cannot
-    // fall through with a null session.
+    // fall through with a null session — and what stops a hook that forgets to throw from letting
+    // a caller carry on with one.
     throw new UnauthorizedError();
   }
 
-  // The same guard for ROUTE HANDLERS. A redirect from a handler answers 307, and a fetch client
-  // follows it and gets HTML, so the client never sees the 401 that triggers its refresh-and-retry.
-  // Handlers catch this and return 401 (see app/api/users/route.ts).
+  /**
+   * The same guard for ROUTE HANDLERS.
+   *
+   * A redirect from a handler answers 307, and a fetch client follows it and receives HTML — so
+   * the client never sees the 401 that drives its sign-out.
+   */
   async function assertSession(): Promise<NonNullable<Session>> {
     const session = await getSession();
     if (!session) throw new UnauthorizedError();
@@ -83,34 +83,30 @@ export function createSessionHelpers(config: SessionConfig) {
     path: "/",
   });
 
-  // Set both auth cookies on a response (used by dev-login + refresh routes).
-  function setAuthCookies(
-    res: NextResponse,
-    tokens: { access: string; refresh: string },
-  ) {
-    const base = cookieBase();
-    res.cookies.set(cookieNames.access, tokens.access, {
-      ...base,
-      maxAge: ttlS.access,
-    });
-    res.cookies.set(cookieNames.refresh, tokens.refresh, {
-      ...base,
-      maxAge: ttlS.refresh,
+  /** Store the backend's session value. Called after sign-in, and again whenever it rotates. */
+  function setSessionCookie(res: NextResponse, backendCookie: string) {
+    res.cookies.set(config.cookieName, backendCookie, {
+      ...cookieBase(),
+      maxAge: config.ttlS,
     });
   }
 
-  // Clear both auth cookies (used by logout + on refresh-token reuse detection).
-  function clearAuthCookies(res: NextResponse) {
-    const base = cookieBase();
-    res.cookies.set(cookieNames.access, "", { ...base, maxAge: 0 });
-    res.cookies.set(cookieNames.refresh, "", { ...base, maxAge: 0 });
+  /**
+   * Expire it. Same attributes it was set with, deliberately: a browser drops a cookie only when
+   * the expiring `Set-Cookie` matches on name, path and the rest, so clearing with a different
+   * shape leaves the original in place and the user stays signed in after pressing sign out.
+   */
+  function clearSessionCookie(res: NextResponse) {
+    res.cookies.set(config.cookieName, "", { ...cookieBase(), maxAge: 0 });
   }
 
   return {
     getSession,
     requireSession,
     assertSession,
-    setAuthCookies,
-    clearAuthCookies,
+    setSessionCookie,
+    clearSessionCookie,
   };
 }
+
+export { UnauthorizedError, type Session } from "./session.js";

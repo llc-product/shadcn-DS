@@ -1,7 +1,7 @@
 {
   "name": "@digitaltwin/auth",
   "version": "0.1.0",
-  "description": "Cookie-only JWT auth: runtime-agnostic core plus a Next adapter",
+  "description": "Cookie-only session for a backend-owned session: runtime-agnostic core plus a Next adapter",
   "license": "UNLICENSED",
   "type": "module",
   "sideEffects": false,
@@ -25,10 +25,6 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@digitaltwin/constants": "^0.1.0",
-    "jose": "^6.2.12"
   },
   "peerDependencies": {
     "next": "^16",

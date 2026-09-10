@@ -1,29 +1,16 @@
-// @digitaltwin/auth — the runtime-agnostic half.
+// @digitaltwin/auth — cookie-only session for a BACKEND-OWNED session.
 //
-// Everything reachable from this entry point runs anywhere: an edge proxy, a Node server, a test.
-// The Next adapter lives behind `@digitaltwin/auth/next` and is NOT re-exported here, deliberately.
-// A barrel that offered both would let a client component or an edge bundle pull `next/headers`
-// and `server-only` in by importing the package name — the exact failure the folder layout in the
-// consuming app avoided by having no barrel at all.
-export {
-  createJwt,
-  DEFAULT_ACCESS_COOKIE,
-  DEFAULT_ACCESS_TTL_S,
-  DEFAULT_REFRESH_COOKIE,
-  DEFAULT_REFRESH_TTL_S,
-  type Jwt,
-  type JwtConfig,
-  type Principal,
-  type RefreshClaims,
-  type Session,
-  type TokenType,
-} from "./jwt.js";
-
-export { createMemoryTokenStore, type TokenStore } from "./token-store.js";
-
-export {
-  createInstanceGuard,
-  InMemoryStoreNotAllowedError,
-  type InstanceGuard,
-  type InstanceGuardConfig,
-} from "./instance-guard.js";
+// The backend issues the session and owns its lifetime: it answers sign-in with its own
+// `Set-Cookie`, rotates it when it likes, and expires it when it likes. This package signs
+// nothing and verifies nothing. What it does is hold that cookie where a browser cannot reach it.
+//
+// WHY THE BACKEND'S COOKIE NEVER REACHES THE BROWSER. The backend is internal, so its cookie is
+// scoped to a host the browser never talks to and would be rejected on arrival. Forwarding it
+// would also mean rewriting its Domain attribute — the kind of quiet edit that turns a session
+// cookie into a cross-site one. So the value is stored inside THIS app's own HttpOnly cookie and
+// replayed server-side on every backend call, which is what `@digitaltwin/api` does with it.
+//
+// The Next adapter lives behind `@digitaltwin/auth/next` and is NOT re-exported here: a barrel
+// offering both would let a client component or an edge bundle pull `next/headers` in by
+// importing the package name.
+export { UnauthorizedError, type Session } from "./session.js";

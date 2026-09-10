@@ -1,7 +1,17 @@
-// @digitaltwin/api — the framework-free half.
+// @digitaltwin/api — one API client instance for the whole app, browser and server.
 //
-// The refresh POLICY, with no transport and no store attached. `./rtk` adapts it to RTK Query and
-// `./server` carries the identity-forwarding client; neither is re-exported here, so an app that
-// wants the policy does not pull @reduxjs/toolkit, and a client bundle cannot reach the server
-// half by importing the package name.
-export { createSingleFlight } from "./single-flight.js";
+// A single entry point, deliberately. The subpaths this package used to have (`./rtk`, `./server`)
+// existed to keep two things apart that no longer exist: an RTK-specific refresh adapter, and
+// server-only identity forwarding. The backend owns the session now, so there is no refresh to
+// adapt and no identity to forward — what is left runs the same in both environments and has no
+// reason to be split.
+export {
+  ApiError,
+  createApiClient,
+  DEFAULT_TIMEOUT_MS,
+  type ApiClient,
+  type ApiClientConfig,
+  type ApiErrorKind,
+  type ApiRequestInit,
+  type ApiSession,
+} from "./client.js";
