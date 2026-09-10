@@ -5,10 +5,9 @@
 // which ship silently and are only visible to someone who reads that language.
 import { describe, expect, it } from "vitest";
 
-import { LOCALES } from "@digitaltwin/constants";
-
 import {
   DEFAULT_LOCALE,
+  LOCALES,
   isSupportedLocale,
   messages,
   messagesFor,

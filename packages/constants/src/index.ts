@@ -25,8 +25,3 @@ export const SESSION_COOKIE = "session";
  * nothing on the backend could explain.
  */
 export const SESSION_TTL_S = 60 * 60 * 24 * 7;
-
-/** Locales the apps ship. The first is the default. */
-export const LOCALES = ["en", "es", "vi", "zh"] as const;
-export type Locale = (typeof LOCALES)[number];
-export const DEFAULT_LOCALE: Locale = "en";

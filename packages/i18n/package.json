@@ -22,9 +22,6 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@digitaltwin/constants": "^0.1.0"
-  },
   "devDependencies": {
     "@digitaltwin/tsconfig": "*",
     "tsup": "^8.5.0",

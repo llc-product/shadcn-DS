@@ -49,9 +49,16 @@ const SERVER_ONLY_IMPORTS = [/^server-only$/, /^next\/headers$/, /^next\/navigat
  */
 const SHARED = ["tsconfig", "eslint-config", "testing"];
 const LAYERS = {
-  "design system": { members: ["design-system", "utils"], label: "the design system" },
+  "design system": {
+    // i18n is HERE, not with the platform libraries, and the reason is what the package holds:
+    // `DesignSystemMessages` — Pagination's Previous, ThemeToggle's label, Spinner's aria-label.
+    // They are the strings this library renders when its consumer supplies none, so they belong
+    // to the same half as the components that render them.
+    members: ["design-system", "utils", "i18n"],
+    label: "the design system",
+  },
   platform: {
-    members: ["api", "auth", "config", "constants", "types", "i18n"],
+    members: ["api", "auth", "config", "constants", "types"],
     label: "the platform libraries",
   },
 };

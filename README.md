@@ -8,13 +8,13 @@ packages/
   ── the design system ──────────────────────────────────────────────────────────────────────────
   ui/            @digitaltwin/design-system — 56 React primitives on the token layer
   utils/         cn + formatting that states its locale instead of reading the machine's
+  i18n/          the design system's OWN default strings, translated. Not an app's copy.
   ── the platform libraries ─────────────────────────────────────────────────────────────────────
   api/           one API client instance, browser and server, on a backend-owned session
   auth/          the session type + its error (edge-safe) · ./next holds the cookie plumbing
   config/        environment SCHEMA fragments (no createEnv: that is the app's call)
-  constants/     the session cookie · locales — values where a MISMATCH between repos is a bug
+  constants/     the session cookie — values where a MISMATCH between repos is a bug
   types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
-  i18n/          the design system's OWN strings, translated. Not an app's copy.
   ── toolchain, wanted by both ──────────────────────────────────────────────────────────────────
   tsconfig/      base · react-library · next
   eslint-config/ base · node · react · design-system · boundaries

@@ -13,14 +13,25 @@
 // Wiring it into next-intl stays in the app: the namespace registry and the request config are
 // composition, and this package must not depend on next-intl to be useful to an app that does not
 // use it.
-import { DEFAULT_LOCALE, LOCALES, type Locale } from "@digitaltwin/constants";
-
 import { en } from "./messages/en.js";
 import { es } from "./messages/es.js";
 import { vi } from "./messages/vi.js";
 import { zh } from "./messages/zh.js";
 
-export { DEFAULT_LOCALE, LOCALES, type Locale };
+/**
+ * The locales this package ships translations for. The first is the default.
+ *
+ * Declared HERE rather than in `@digitaltwin/constants`, and the move is not cosmetic. This list
+ * and the `messages` map below have to agree — a locale in one and not the other is either a
+ * missing translation or a dead entry — and a contract can only be enforced where both halves of
+ * it live. Keeping the list one package away made "the apps ship these locales" and "this package
+ * translates these locales" two facts that were true by habit.
+ *
+ * An app with a different set overrides it: every consumer takes a locale as an argument.
+ */
+export const LOCALES = ["en", "es", "vi", "zh"] as const;
+export type Locale = (typeof LOCALES)[number];
+export const DEFAULT_LOCALE: Locale = "en";
 
 /**
  * The shape every locale must satisfy, derived from the English one rather than hand-written.
