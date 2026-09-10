@@ -3,7 +3,6 @@
 
 import { createContext, useContext, useId, useMemo } from "react";
 import * as RechartsPrimitive from "recharts";
-import { formatNumber } from "@digitaltwin/utils";
 
 import { cn } from "../../utils/cn.js";
 
@@ -95,11 +94,21 @@ export const ChartTooltip = RechartsPrimitive.Tooltip;
  * A design system must not pick a user's locale for them. It renders the same everywhere until a
  * consumer says otherwise, and `valueFormatter` is how they say so.
  *
- * `formatNumber` from @digitaltwin/utils rather than a second copy of the same three lines: it is
- * the package that already owns "state the locale, never infer it", and it also survives the
- * malformed tags and impossible options a hand-rolled `Intl.NumberFormat` throws on.
+ * Formatted here rather than through @digitaltwin/utils, which owns the general helper: that
+ * package sits in the platform half and the design system may not depend on it. The general
+ * version guards against malformed locale tags and impossible option combinations — neither of
+ * which this can hit, because it passes no locale and no options. What is left is the whole of
+ * what this call ever used.
+ *
+ * A fixed tag, not the runtime default: `new Intl.NumberFormat()` reads the machine's locale, so
+ * the same chart would render "1,234" on one server and "1.234" on another. The design system
+ * renders the same everywhere until a consumer says otherwise.
  */
-const formatTooltipValue = (value: unknown): React.ReactNode => formatNumber(value);
+const TOOLTIP_LOCALE = "en-US";
+const formatTooltipValue = (value: unknown): React.ReactNode =>
+  typeof value === "number" && Number.isFinite(value)
+    ? new Intl.NumberFormat(TOOLTIP_LOCALE).format(value)
+    : String(value);
 
 export function ChartTooltipContent({
   active,

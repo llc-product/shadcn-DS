@@ -15,7 +15,8 @@ The previous release path published exactly one package and asserted that the gi
 version in its manifest. That works for one package and stops working the moment there are several,
 because most releases here are not one package moving on its own:
 
-- `@digitaltwin/utils` changes → `@digitaltwin/design-system` depends on it and must be republished
+- a package's dependents must be republished with it — `changeset version` works that out from the
+  manifests, so listing the changed package is enough
   with a bumped range, or consumers get a version pair that was never tested together.
 - `@digitaltwin/constants` changes → `auth`, `api` and `i18n` all depend on it and all move.
 

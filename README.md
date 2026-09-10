@@ -6,8 +6,7 @@ out loud, because the repository is easy to mistake for one thing:
 ```
 packages/
   design-system/
-    ui/            @digitaltwin/design-system — 56 React primitives on the token layer
-    utils/         cn + formatting that states its locale instead of reading the machine's
+    ui/            @digitaltwin/design-system — 56 React primitives on the token layer, and `cn`
     i18n/          the design system's OWN default strings, translated. Not an app's copy.
   platform/
     api/           one API client instance, browser and server, on a backend-owned session
@@ -15,6 +14,7 @@ packages/
     config/        environment SCHEMA fragments (no createEnv: that is the app's call)
     constants/     the session cookie — values where a MISMATCH between repos is a bug
     types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
+    utils/         number formatting that states its locale instead of reading the machine's
   toolchain/       wanted by both halves, which is why they can share a repository
     tsconfig/      base · react-library · next
     eslint-config/ base · node · react · design-system · boundaries
@@ -24,7 +24,7 @@ scripts/         the token pipeline, the catalog generators, and the publish gua
 docs/            component-authoring.md (the standard) · components.md (generated)
 ```
 
-The design system is 4,100 of the ~5,000 lines here. The rest is what an app's BFF needs, and the
+The design system is ~4,300 of the ~5,100 lines here. The rest is what an app's BFF needs, and the
 two halves **do not import each other in either direction** — not once, today.
 
 ## Why one repository
