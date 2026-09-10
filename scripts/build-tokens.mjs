@@ -1,6 +1,6 @@
 /**
- * build-tokens.mjs — tokens.export.json  ->  packages/ui/src/styles/tokens.css
- *                                        ->  packages/ui/src/tokens/tokens.ts
+ * build-tokens.mjs — tokens.export.json  ->  packages/design-system/ui/src/styles/tokens.css
+ *                                        ->  packages/design-system/ui/src/tokens/tokens.ts
  *
  * Both outputs are GENERATED AND COMMITTED, and CI re-runs this then asserts `git diff` is empty.
  * Committing them means a consumer can read the palette in a diff; regenerating them in CI means

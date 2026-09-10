@@ -17,7 +17,7 @@
     "components": [
       {
         "name": "button",
-        "file": "packages/ui/src/components/button/button.tsx",
+        "file": "packages/design-system/ui/src/components/button/button.tsx",
         "description": "design-system Button (CVA variants + tokens, asChild via Slot).",
         "client": false,
         "radixBase": "@radix-ui/react-slot",
@@ -34,7 +34,7 @@
       },
       {
         "name": "input",
-        "file": "packages/ui/src/components/input/input.tsx",
+        "file": "packages/design-system/ui/src/components/input/input.tsx",
         "description": "single-line text field, token-styled, native <input> underneath.",
         "client": false,
         "radixBase": null,
@@ -44,7 +44,7 @@
       },
       {
         "name": "textarea",
-        "file": "packages/ui/src/components/textarea/textarea.tsx",
+        "file": "packages/design-system/ui/src/components/textarea/textarea.tsx",
         "description": "multi-line text field, token-styled, native <textarea> underneath.",
         "client": false,
         "radixBase": null,
@@ -54,7 +54,7 @@
       },
       {
         "name": "label",
-        "file": "packages/ui/src/components/label/label.tsx",
+        "file": "packages/design-system/ui/src/components/label/label.tsx",
         "description": "form label bound to a control (Radix Label).",
         "client": true,
         "radixBase": "@radix-ui/react-label",
@@ -64,7 +64,7 @@
       },
       {
         "name": "badge",
-        "file": "packages/ui/src/components/badge/badge.tsx",
+        "file": "packages/design-system/ui/src/components/badge/badge.tsx",
         "description": "small status or count label (CVA variants, not interactive).",
         "client": false,
         "radixBase": null,
@@ -76,7 +76,7 @@
       },
       {
         "name": "skeleton",
-        "file": "packages/ui/src/components/skeleton/skeleton.tsx",
+        "file": "packages/design-system/ui/src/components/skeleton/skeleton.tsx",
         "description": "pulsing placeholder for content that has not arrived yet.",
         "client": false,
         "radixBase": null,
@@ -86,7 +86,7 @@
       },
       {
         "name": "spinner",
-        "file": "packages/ui/src/components/spinner/spinner.tsx",
+        "file": "packages/design-system/ui/src/components/spinner/spinner.tsx",
         "description": "indeterminate loading indicator, announced as a live status.",
         "client": false,
         "radixBase": null,
@@ -96,7 +96,7 @@
       },
       {
         "name": "toggle",
-        "file": "packages/ui/src/components/toggle/toggle.tsx",
+        "file": "packages/design-system/ui/src/components/toggle/toggle.tsx",
         "description": "two-state pressable button (Radix Toggle).",
         "client": true,
         "radixBase": "@radix-ui/react-toggle",
@@ -108,7 +108,7 @@
       },
       {
         "name": "toggle-group",
-        "file": "packages/ui/src/components/toggle-group/toggle-group.tsx",
+        "file": "packages/design-system/ui/src/components/toggle-group/toggle-group.tsx",
         "description": "a set of toggles, single- or multi-select (Radix ToggleGroup).",
         "client": true,
         "radixBase": "@radix-ui/react-toggle-group",
@@ -118,7 +118,7 @@
       },
       {
         "name": "kbd",
-        "file": "packages/ui/src/components/kbd/kbd.tsx",
+        "file": "packages/design-system/ui/src/components/kbd/kbd.tsx",
         "description": "styled <kbd> for keyboard-shortcut hints.",
         "client": false,
         "radixBase": null,
@@ -128,7 +128,7 @@
       },
       {
         "name": "button-group",
-        "file": "packages/ui/src/components/button-group/button-group.tsx",
+        "file": "packages/design-system/ui/src/components/button-group/button-group.tsx",
         "description": "joins adjacent buttons into a single visual group.",
         "client": false,
         "radixBase": null,
@@ -164,7 +164,7 @@
     "components": [
       {
         "name": "card",
-        "file": "packages/ui/src/components/card/card.tsx",
+        "file": "packages/design-system/ui/src/components/card/card.tsx",
         "description": "composable Card primitives.",
         "client": false,
         "radixBase": "@radix-ui/react-slot",
@@ -181,7 +181,7 @@
       },
       {
         "name": "separator",
-        "file": "packages/ui/src/components/separator/separator.tsx",
+        "file": "packages/design-system/ui/src/components/separator/separator.tsx",
         "description": "semantic or decorative rule between content (Radix Separator).",
         "client": true,
         "radixBase": "@radix-ui/react-separator",
@@ -191,7 +191,7 @@
       },
       {
         "name": "scroll-area",
-        "file": "packages/ui/src/components/scroll-area/scroll-area.tsx",
+        "file": "packages/design-system/ui/src/components/scroll-area/scroll-area.tsx",
         "description": "scroll container with styled, overlay-free scrollbars (Radix ScrollArea).",
         "client": true,
         "radixBase": "@radix-ui/react-scroll-area",
@@ -201,7 +201,7 @@
       },
       {
         "name": "tabs",
-        "file": "packages/ui/src/components/tabs/tabs.tsx",
+        "file": "packages/design-system/ui/src/components/tabs/tabs.tsx",
         "description": "one panel visible at a time, from a list of triggers (Radix Tabs).",
         "client": true,
         "radixBase": "@radix-ui/react-tabs",
@@ -211,7 +211,7 @@
       },
       {
         "name": "accordion",
-        "file": "packages/ui/src/components/accordion/accordion.tsx",
+        "file": "packages/design-system/ui/src/components/accordion/accordion.tsx",
         "description": "vertically stacked, collapsible sections (Radix Accordion).",
         "client": true,
         "radixBase": "@radix-ui/react-accordion",
@@ -221,7 +221,7 @@
       },
       {
         "name": "table",
-        "file": "packages/ui/src/components/table/table.tsx",
+        "file": "packages/design-system/ui/src/components/table/table.tsx",
         "description": "semantic data table with a scroll wrapper so a wide one cannot break the page.",
         "client": false,
         "radixBase": null,
@@ -240,7 +240,7 @@
       },
       {
         "name": "breadcrumb",
-        "file": "packages/ui/src/components/breadcrumb/breadcrumb.tsx",
+        "file": "packages/design-system/ui/src/components/breadcrumb/breadcrumb.tsx",
         "description": "trail of ancestor links ending in the current page.",
         "client": false,
         "radixBase": null,
@@ -258,7 +258,7 @@
       },
       {
         "name": "pagination",
-        "file": "packages/ui/src/components/pagination/pagination.tsx",
+        "file": "packages/design-system/ui/src/components/pagination/pagination.tsx",
         "description": "page navigation built from Button variants, not a new control.",
         "client": false,
         "radixBase": null,
@@ -276,7 +276,7 @@
       },
       {
         "name": "collapsible",
-        "file": "packages/ui/src/components/collapsible/collapsible.tsx",
+        "file": "packages/design-system/ui/src/components/collapsible/collapsible.tsx",
         "description": "one show/hide region driven by a trigger (Radix Collapsible).",
         "client": true,
         "radixBase": "@radix-ui/react-collapsible",
@@ -286,7 +286,7 @@
       },
       {
         "name": "aspect-ratio",
-        "file": "packages/ui/src/components/aspect-ratio/aspect-ratio.tsx",
+        "file": "packages/design-system/ui/src/components/aspect-ratio/aspect-ratio.tsx",
         "description": "locks a child to a fixed width/height ratio (Radix AspectRatio).",
         "client": true,
         "radixBase": "@radix-ui/react-aspect-ratio",
@@ -296,7 +296,7 @@
       },
       {
         "name": "resizable",
-        "file": "packages/ui/src/components/resizable/resizable.tsx",
+        "file": "packages/design-system/ui/src/components/resizable/resizable.tsx",
         "description": "draggable split panes with a keyboard-operable handle (react-resizable-panels).",
         "client": true,
         "radixBase": null,
@@ -306,7 +306,7 @@
       },
       {
         "name": "carousel",
-        "file": "packages/ui/src/components/carousel/carousel.tsx",
+        "file": "packages/design-system/ui/src/components/carousel/carousel.tsx",
         "description": "slide viewport with keyboard navigation, horizontal or vertical (Embla).",
         "client": true,
         "radixBase": null,
@@ -323,7 +323,7 @@
       },
       {
         "name": "item",
-        "file": "packages/ui/src/components/item/item.tsx",
+        "file": "packages/design-system/ui/src/components/item/item.tsx",
         "description": "list-item primitive for menus, settings rows and row-style cards.",
         "client": false,
         "radixBase": null,
@@ -370,7 +370,7 @@
     "components": [
       {
         "name": "checkbox",
-        "file": "packages/ui/src/components/checkbox/checkbox.tsx",
+        "file": "packages/design-system/ui/src/components/checkbox/checkbox.tsx",
         "description": "binary control with an indeterminate state (Radix Checkbox).",
         "client": true,
         "radixBase": "@radix-ui/react-checkbox",
@@ -380,7 +380,7 @@
       },
       {
         "name": "radio-group",
-        "file": "packages/ui/src/components/radio-group/radio-group.tsx",
+        "file": "packages/design-system/ui/src/components/radio-group/radio-group.tsx",
         "description": "one-of-many selection (Radix RadioGroup).",
         "client": true,
         "radixBase": "@radix-ui/react-radio-group",
@@ -390,7 +390,7 @@
       },
       {
         "name": "switch",
-        "file": "packages/ui/src/components/switch/switch.tsx",
+        "file": "packages/design-system/ui/src/components/switch/switch.tsx",
         "description": "on/off toggle for a setting that applies immediately (Radix Switch).",
         "client": true,
         "radixBase": "@radix-ui/react-switch",
@@ -400,7 +400,7 @@
       },
       {
         "name": "slider",
-        "file": "packages/ui/src/components/slider/slider.tsx",
+        "file": "packages/design-system/ui/src/components/slider/slider.tsx",
         "description": "numeric range input, single or multi-thumb (Radix Slider).",
         "client": true,
         "radixBase": "@radix-ui/react-slider",
@@ -410,7 +410,7 @@
       },
       {
         "name": "select",
-        "file": "packages/ui/src/components/select/select.tsx",
+        "file": "packages/design-system/ui/src/components/select/select.tsx",
         "description": "single-select listbox with keyboard typeahead (Radix Select).",
         "client": true,
         "radixBase": "@radix-ui/react-select",
@@ -429,7 +429,7 @@
       },
       {
         "name": "native-select",
-        "file": "packages/ui/src/components/native-select/native-select.tsx",
+        "file": "packages/design-system/ui/src/components/native-select/native-select.tsx",
         "description": "styled native <select>, matching SelectTrigger's token styling.",
         "client": false,
         "radixBase": null,
@@ -439,7 +439,7 @@
       },
       {
         "name": "field",
-        "file": "packages/ui/src/components/field/field.tsx",
+        "file": "packages/design-system/ui/src/components/field/field.tsx",
         "description": "form-field composition primitives for Server-Action + Zod forms.",
         "client": false,
         "radixBase": null,
@@ -459,7 +459,7 @@
       },
       {
         "name": "input-group",
-        "file": "packages/ui/src/components/input-group/input-group.tsx",
+        "file": "packages/design-system/ui/src/components/input-group/input-group.tsx",
         "description": "Input wrapper that pairs it with inline leading/trailing addons.",
         "client": false,
         "radixBase": null,
@@ -479,7 +479,7 @@
       },
       {
         "name": "input-otp",
-        "file": "packages/ui/src/components/input-otp/input-otp.tsx",
+        "file": "packages/design-system/ui/src/components/input-otp/input-otp.tsx",
         "description": "one-time-code field with one slot per character (input-otp).",
         "client": true,
         "radixBase": null,
@@ -489,7 +489,7 @@
       },
       {
         "name": "calendar",
-        "file": "packages/ui/src/components/calendar/calendar.tsx",
+        "file": "packages/design-system/ui/src/components/calendar/calendar.tsx",
         "description": "month grid for date selection (react-day-picker).",
         "client": true,
         "radixBase": null,
@@ -499,7 +499,7 @@
       },
       {
         "name": "date-picker",
-        "file": "packages/ui/src/components/date-picker/date-picker.tsx",
+        "file": "packages/design-system/ui/src/components/date-picker/date-picker.tsx",
         "description": "date field, composed from Popover + Calendar + Button.",
         "client": true,
         "radixBase": null,
@@ -509,7 +509,7 @@
       },
       {
         "name": "combobox",
-        "file": "packages/ui/src/components/combobox/combobox.tsx",
+        "file": "packages/design-system/ui/src/components/combobox/combobox.tsx",
         "description": "searchable single-select, composed from Popover + Command.",
         "client": true,
         "radixBase": null,
@@ -525,7 +525,7 @@
     "components": [
       {
         "name": "alert",
-        "file": "packages/ui/src/components/alert/alert.tsx",
+        "file": "packages/design-system/ui/src/components/alert/alert.tsx",
         "description": "inline message block, announced as a live alert.",
         "client": false,
         "radixBase": null,
@@ -537,7 +537,7 @@
       },
       {
         "name": "progress",
-        "file": "packages/ui/src/components/progress/progress.tsx",
+        "file": "packages/design-system/ui/src/components/progress/progress.tsx",
         "description": "determinate progress bar (Radix Progress).",
         "client": true,
         "radixBase": "@radix-ui/react-progress",
@@ -547,7 +547,7 @@
       },
       {
         "name": "avatar",
-        "file": "packages/ui/src/components/avatar/avatar.tsx",
+        "file": "packages/design-system/ui/src/components/avatar/avatar.tsx",
         "description": "user image with a text fallback while it loads or fails (Radix Avatar).",
         "client": true,
         "radixBase": "@radix-ui/react-avatar",
@@ -557,7 +557,7 @@
       },
       {
         "name": "sonner",
-        "file": "packages/ui/src/components/sonner/sonner.tsx",
+        "file": "packages/design-system/ui/src/components/sonner/sonner.tsx",
         "description": "toast host and the toast() imperative API (Sonner).",
         "client": true,
         "radixBase": null,
@@ -567,7 +567,7 @@
       },
       {
         "name": "empty",
-        "file": "packages/ui/src/components/empty/empty.tsx",
+        "file": "packages/design-system/ui/src/components/empty/empty.tsx",
         "description": "empty-state placeholder primitives.",
         "client": false,
         "radixBase": null,
@@ -605,7 +605,7 @@
     "components": [
       {
         "name": "dialog",
-        "file": "packages/ui/src/components/dialog/dialog.tsx",
+        "file": "packages/design-system/ui/src/components/dialog/dialog.tsx",
         "description": "modal overlay with focus trap and scroll lock (Radix Dialog).",
         "client": true,
         "radixBase": "@radix-ui/react-dialog",
@@ -626,7 +626,7 @@
       },
       {
         "name": "sheet",
-        "file": "packages/ui/src/components/sheet/sheet.tsx",
+        "file": "packages/design-system/ui/src/components/sheet/sheet.tsx",
         "description": "dialog that enters from an edge of the viewport (Radix Dialog).",
         "client": true,
         "radixBase": "@radix-ui/react-dialog",
@@ -647,7 +647,7 @@
       },
       {
         "name": "alert-dialog",
-        "file": "packages/ui/src/components/alert-dialog/alert-dialog.tsx",
+        "file": "packages/design-system/ui/src/components/alert-dialog/alert-dialog.tsx",
         "description": "modal that interrupts and requires a choice (Radix AlertDialog).",
         "client": true,
         "radixBase": "@radix-ui/react-alert-dialog",
@@ -667,7 +667,7 @@
       },
       {
         "name": "popover",
-        "file": "packages/ui/src/components/popover/popover.tsx",
+        "file": "packages/design-system/ui/src/components/popover/popover.tsx",
         "description": "floating panel anchored to a trigger, focusable (Radix Popover).",
         "client": true,
         "radixBase": "@radix-ui/react-popover",
@@ -677,7 +677,7 @@
       },
       {
         "name": "hover-card",
-        "file": "packages/ui/src/components/hover-card/hover-card.tsx",
+        "file": "packages/design-system/ui/src/components/hover-card/hover-card.tsx",
         "description": "rich preview shown on hover, for sighted pointer users only (Radix HoverCard).",
         "client": true,
         "radixBase": "@radix-ui/react-hover-card",
@@ -687,7 +687,7 @@
       },
       {
         "name": "tooltip",
-        "file": "packages/ui/src/components/tooltip/tooltip.tsx",
+        "file": "packages/design-system/ui/src/components/tooltip/tooltip.tsx",
         "description": "short label on hover or focus, never the only source of information (Radix Tooltip).",
         "client": true,
         "radixBase": "@radix-ui/react-tooltip",
@@ -697,7 +697,7 @@
       },
       {
         "name": "dropdown-menu",
-        "file": "packages/ui/src/components/dropdown-menu/dropdown-menu.tsx",
+        "file": "packages/design-system/ui/src/components/dropdown-menu/dropdown-menu.tsx",
         "description": "menu anchored to a trigger, with items, checkboxes, radios and submenus (Radix DropdownMenu).",
         "client": true,
         "radixBase": "@radix-ui/react-dropdown-menu",
@@ -722,7 +722,7 @@
       },
       {
         "name": "context-menu",
-        "file": "packages/ui/src/components/context-menu/context-menu.tsx",
+        "file": "packages/design-system/ui/src/components/context-menu/context-menu.tsx",
         "description": "right-click menu with submenus and checkbox/radio items (Radix ContextMenu).",
         "client": true,
         "radixBase": "@radix-ui/react-context-menu",
@@ -748,7 +748,7 @@
       },
       {
         "name": "menubar",
-        "file": "packages/ui/src/components/menubar/menubar.tsx",
+        "file": "packages/design-system/ui/src/components/menubar/menubar.tsx",
         "description": "application menu bar with pull-down menus (Radix Menubar).",
         "client": true,
         "radixBase": "@radix-ui/react-menubar",
@@ -775,7 +775,7 @@
       },
       {
         "name": "navigation-menu",
-        "file": "packages/ui/src/components/navigation-menu/navigation-menu.tsx",
+        "file": "packages/design-system/ui/src/components/navigation-menu/navigation-menu.tsx",
         "description": "site navigation with hoverable content panels (Radix NavigationMenu).",
         "client": true,
         "radixBase": "@radix-ui/react-navigation-menu",
@@ -795,7 +795,7 @@
       },
       {
         "name": "command",
-        "file": "packages/ui/src/components/command/command.tsx",
+        "file": "packages/design-system/ui/src/components/command/command.tsx",
         "description": "filterable command list (cmdk); pairs with Dialog for a command palette.",
         "client": true,
         "radixBase": null,
@@ -815,7 +815,7 @@
       },
       {
         "name": "drawer",
-        "file": "packages/ui/src/components/drawer/drawer.tsx",
+        "file": "packages/design-system/ui/src/components/drawer/drawer.tsx",
         "description": "edge-anchored panel with drag-to-dismiss (Vaul).",
         "client": true,
         "radixBase": null,
@@ -842,7 +842,7 @@
     "components": [
       {
         "name": "chart",
-        "file": "packages/ui/src/components/chart/chart.tsx",
+        "file": "packages/design-system/ui/src/components/chart/chart.tsx",
         "description": "themed Recharts container, tooltip and legend on the --chart-* tokens.",
         "client": true,
         "radixBase": null,
@@ -866,7 +866,7 @@
     "components": [
       {
         "name": "theme-provider",
-        "file": "packages/ui/src/components/theme-provider/theme-provider.tsx",
+        "file": "packages/design-system/ui/src/components/theme-provider/theme-provider.tsx",
         "description": "wraps next-themes (class-based dark mode).",
         "client": true,
         "radixBase": null,
@@ -876,7 +876,7 @@
       },
       {
         "name": "theme-toggle",
-        "file": "packages/ui/src/components/theme-toggle/theme-toggle.tsx",
+        "file": "packages/design-system/ui/src/components/theme-toggle/theme-toggle.tsx",
         "description": "light/dark switch (uses next-themes).",
         "client": true,
         "radixBase": null,

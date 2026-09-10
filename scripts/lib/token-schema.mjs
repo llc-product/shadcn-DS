@@ -17,7 +17,7 @@ export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 export const EXPORT_FILE = join(ROOT, "tokens.export.json");
 export const RAW_FILE = join(ROOT, "tokens.raw.json");
 
-export const UI_SRC = join(ROOT, "packages/ui/src");
+export const UI_SRC = join(ROOT, "packages/design-system/ui/src");
 export const TOKENS_CSS = join(UI_SRC, "styles/tokens.css");
 export const TOKENS_TS = join(UI_SRC, "tokens/tokens.ts");
 

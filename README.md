@@ -5,20 +5,20 @@ out loud, because the repository is easy to mistake for one thing:
 
 ```
 packages/
-  ── the design system ──────────────────────────────────────────────────────────────────────────
-  ui/            @digitaltwin/design-system — 56 React primitives on the token layer
-  utils/         cn + formatting that states its locale instead of reading the machine's
-  i18n/          the design system's OWN default strings, translated. Not an app's copy.
-  ── the platform libraries ─────────────────────────────────────────────────────────────────────
-  api/           one API client instance, browser and server, on a backend-owned session
-  auth/          the session type + its error (edge-safe) · ./next holds the cookie plumbing
-  config/        environment SCHEMA fragments (no createEnv: that is the app's call)
-  constants/     the session cookie — values where a MISMATCH between repos is a bug
-  types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
-  ── toolchain, wanted by both ──────────────────────────────────────────────────────────────────
-  tsconfig/      base · react-library · next
-  eslint-config/ base · node · react · design-system · boundaries
-  testing/       the jsdom stubs and the vitest config factory
+  design-system/
+    ui/            @digitaltwin/design-system — 56 React primitives on the token layer
+    utils/         cn + formatting that states its locale instead of reading the machine's
+    i18n/          the design system's OWN default strings, translated. Not an app's copy.
+  platform/
+    api/           one API client instance, browser and server, on a backend-owned session
+    auth/          the session type + its error (edge-safe) · ./next holds the cookie plumbing
+    config/        environment SCHEMA fragments (no createEnv: that is the app's call)
+    constants/     the session cookie — values where a MISMATCH between repos is a bug
+    types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
+  toolchain/       wanted by both halves, which is why they can share a repository
+    tsconfig/      base · react-library · next
+    eslint-config/ base · node · react · design-system · boundaries
+    testing/       the jsdom stubs and the vitest config factory
 apps/docs/       the docs site (Next.js static export) — and the library's first real consumer
 scripts/         the token pipeline, the catalog generators, and the publish guards
 docs/            component-authoring.md (the standard) · components.md (generated)
@@ -37,11 +37,15 @@ And because no coupling means the split stays cheap. There is nothing to unpick 
 halves want different release cadences, moving six small packages is an afternoon. Waiting costs
 nothing, so this is a decision to keep making rather than one to make now.
 
-**`npm run check:graph` is what keeps it true.** The separation was a fact, not a rule, and a fact
-is one convenient import away from ending. The check now fails on a dependency crossing between the
-halves, so "cheap to split later" stays a property of the repository instead of a claim in a
-README. Toolchain packages are exempt: both halves may use them, which is the whole reason they
-are here.
+**The directory IS the declaration.** `packages/<layer>/<name>` — there is no list anywhere saying
+which half a package belongs to, because the path already says it, and a path cannot drift from
+itself. `npm run check:graph` reads the layer off the directory and fails on a dependency crossing
+between the two halves, so "cheap to split later" stays a property of the repository rather than a
+claim in a README. `packages/toolchain/` is the exemption: both halves may depend on it, which is
+the whole reason they can share a repository at all.
+
+Filing a package under the wrong half is therefore not a rule you can break by accident. It is a
+`git mv`, and the diff shows it.
 
 **Why the small ones are separate packages.** Because there is more than one consumer, and a
 package boundary is the only thing a second repository can import. The alternative — one
@@ -81,7 +85,7 @@ While there is no remote, link it instead:
 
 ```jsonc
 // package.json
-"@digitaltwin/design-system": "file:../design-system/packages/ui"
+"@digitaltwin/design-system": "file:../design-system/packages/design-system/ui"
 ```
 
 **2. Wire the stylesheet** — three lines, and the third is the one people forget:
@@ -128,7 +132,7 @@ is looking at, and two copies of `next-themes` means the toggle and the provider
 Server Component and cost the route nothing. The build is deliberately **unbundled** so that
 stays true per file rather than collapsing to "the whole library is a client reference".
 
-`packages/ui` never imports `next`, so a component that needs routing takes `asChild`:
+`packages/design-system/ui` never imports `next`, so a component that needs routing takes `asChild`:
 
 ```tsx
 <Button asChild>
@@ -141,8 +145,8 @@ stays true per file rather than collapsing to "the whole library is a client ref
 ## Tokens
 
 `tokens.export.json` is the snapshot. `scripts/build-tokens.mjs` turns it into
-`packages/ui/src/styles/tokens.css` (custom properties + `@theme inline`) and
-`packages/ui/src/tokens/tokens.ts` (the same values for code that cannot read a stylesheet — a
+`packages/design-system/ui/src/styles/tokens.css` (custom properties + `@theme inline`) and
+`packages/design-system/ui/src/tokens/tokens.ts` (the same values for code that cannot read a stylesheet — a
 canvas, a chart, an email). Both are generated **and committed**, and CI rebuilds them and fails
 on a diff.
 
@@ -158,7 +162,7 @@ collection exists — no generator change needed.
 
 ### The contrast gate
 
-`packages/ui/src/styles/tokens.test.ts` parses the generated stylesheet, converts OKLCH the way a
+`packages/design-system/ui/src/styles/tokens.test.ts` parses the generated stylesheet, converts OKLCH the way a
 browser does, and asserts every pair that carries a WCAG obligation. Building this gate found two
 real failures in the palette it inherited:
 
@@ -211,7 +215,7 @@ The component list is [`docs/components.md`](docs/components.md), generated from
   word in a file nobody reads twice, and flipping it would keep the build green while making the
   whole library a client reference. This is what notices.
 - **a coverage ratchet per package**, set just under what that package's suite actually covers, not
-  to an aspiration. `packages/ui` sits at 97 / 89 / 97 / 97 against a suite measuring ~98; the six
+  to an aspiration. `packages/design-system/ui` sits at 97 / 89 / 97 / 97 against a suite measuring ~98; the six
   smaller packages are at 95 / 90 / 95 / 95 and most of them measure 100. Raise them as tests are
   added; the one thing never to do is lower one to make CI green, which converts the only automatic
   signal about test decay into a number someone edits whenever it complains.

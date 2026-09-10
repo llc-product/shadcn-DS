@@ -17,14 +17,14 @@ export default [
       "**/.next/**",
       "**/out/**",
       // Generated. build-tokens.mjs owns these; lint findings belong in the generator.
-      "packages/ui/src/styles/tokens.css",
-      "packages/ui/src/tokens/tokens.ts",
+      "packages/design-system/ui/src/styles/tokens.css",
+      "packages/design-system/ui/src/tokens/tokens.ts",
     ],
   },
 
   ...base,
   ...node(["scripts/**/*.mjs", "*.mjs"]),
   ...react(["packages/**/*.{ts,tsx}", "apps/**/*.{ts,tsx}"]),
-  ...designSystem({ files: ["packages/ui/src/components/**/*.{ts,tsx}"] }),
+  ...designSystem({ files: ["packages/design-system/ui/src/components/**/*.{ts,tsx}"] }),
   ...testOverrides,
 ];

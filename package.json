@@ -6,11 +6,11 @@
   "description": "Two package sets sharing a toolchain: the DigitalTwin design system, and the platform libraries an app BFF needs",
   "license": "UNLICENSED",
   "workspaces": [
-    "packages/*",
+    "packages/*/*",
     "apps/*"
   ],
   "scripts": {
-    "build:tokens": "node scripts/build-tokens.mjs && prettier --log-level warn --write \"packages/ui/src/styles/tokens.css\" \"packages/ui/src/tokens/tokens.ts\"",
+    "build:tokens": "node scripts/build-tokens.mjs && prettier --log-level warn --write \"packages/design-system/ui/src/styles/tokens.css\" \"packages/design-system/ui/src/tokens/tokens.ts\"",
     "sync:tokens": "node scripts/sync-tokens.mjs && npm run build:tokens",
     "check:figma-drift": "node scripts/check-figma-drift.mjs",
     "build:catalog": "node scripts/build-catalog.mjs && prettier --log-level warn --write docs/components.md",

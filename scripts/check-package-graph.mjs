@@ -38,48 +38,47 @@ const SCOPE = "@digitaltwin/";
 const SERVER_ONLY_IMPORTS = [/^server-only$/, /^next\/headers$/, /^next\/navigation$/];
 
 /**
- * The two halves, and what each may depend on.
+ * The layer a package belongs to IS the directory it sits in — `packages/<layer>/<name>` — so
+ * there is no list here to keep in step with the tree. Filing a package under the wrong half is
+ * not a rule you can break; it is a move you would have to make on purpose, and the diff shows it.
  *
- * A package named here may depend on its own half plus SHARED; anything else is a violation.
- * A package in neither list is unconstrained — `tsconfig`, `eslint-config` and `testing` are
- * toolchain, wanted by both halves, and are the reason one repo is still the right shape.
- *
- * Add a package to a half when it is written; leaving it out is not an error, it just means this
- * check has nothing to say about it.
+ * `toolchain` is the exemption: both halves may depend on it, which is the whole reason one
+ * repository is still the right shape for these two.
  */
-const SHARED = ["tsconfig", "eslint-config", "testing"];
-const LAYERS = {
-  "design system": {
-    // i18n is HERE, not with the platform libraries, and the reason is what the package holds:
-    // `DesignSystemMessages` — Pagination's Previous, ThemeToggle's label, Spinner's aria-label.
-    // They are the strings this library renders when its consumer supplies none, so they belong
-    // to the same half as the components that render them.
-    members: ["design-system", "utils", "i18n"],
-    label: "the design system",
-  },
-  platform: {
-    members: ["api", "auth", "config", "constants", "types"],
-    label: "the platform libraries",
-  },
+const TOOLCHAIN = "toolchain";
+const LABELS = {
+  "design-system": "the design system",
+  platform: "the platform libraries",
+  toolchain: "the toolchain",
 };
 
 const read = (file) => readFileSync(file, "utf8");
 const readJson = (file) => JSON.parse(read(file));
 
+/** Directories matching a `a/b` or `a/b/c` workspace pattern, with their manifests. */
+function expand(base, depth) {
+  if (!existsSync(base)) return [];
+  const entries = readdirSync(base, { withFileTypes: true }).filter((e) =>
+    e.isDirectory(),
+  );
+  if (depth > 1) return entries.flatMap((e) => expand(join(base, e.name), depth - 1));
+  return entries
+    .map((e) => join(base, e.name))
+    .filter((dir) => existsSync(join(dir, "package.json")));
+}
+
 function workspaces() {
   const { workspaces: patterns = [] } = readJson(join(ROOT, "package.json"));
   const out = [];
   for (const pattern of patterns) {
-    if (!pattern.endsWith("/*")) {
+    const parts = pattern.split("/");
+    const stars = parts.filter((p) => p === "*").length;
+    if (stars === 0 || parts.slice(-stars).some((p) => p !== "*")) {
       throw new Error(`unsupported workspace pattern "${pattern}"`);
     }
-    const dir = join(ROOT, pattern.slice(0, -2));
-    if (!existsSync(dir)) continue;
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      const manifest = join(dir, entry.name, "package.json");
-      if (existsSync(manifest))
-        out.push({ dir: join(dir, entry.name), pkg: readJson(manifest) });
+    const base = join(ROOT, ...parts.slice(0, parts.length - stars));
+    for (const dir of expand(base, stars)) {
+      out.push({ dir, pkg: readJson(join(dir, "package.json")) });
     }
   }
   return out;
@@ -115,29 +114,33 @@ function walk(name, trail) {
 for (const name of graph.keys()) walk(name, []);
 
 // ── 2. layer violations ─────────────────────────────────────────────────────────────────────────
-const halfOf = (short) =>
-  Object.entries(LAYERS).find(([, { members }]) => members.includes(short))?.[0];
+/** `packages/platform/api` -> "platform". Anything not two levels under packages/ has no layer. */
+function layerOf(dir) {
+  const rel = dir
+    .slice(ROOT.length + 1)
+    .replaceAll("\\", "/")
+    .split("/");
+  return rel[0] === "packages" && rel.length === 3 ? rel[1] : undefined;
+}
 
-for (const { pkg } of packages) {
-  const short = pkg.name.startsWith(SCOPE) ? pkg.name.slice(SCOPE.length) : pkg.name;
-  const half = halfOf(short);
-  if (!half) continue;
+const layerByName = new Map(packages.map(({ dir, pkg }) => [pkg.name, layerOf(dir)]));
+
+for (const { dir, pkg } of packages) {
+  const half = layerOf(dir);
+  if (!half || half === TOOLCHAIN) continue;
 
   const deps = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
   for (const dep of Object.keys(deps)) {
     if (!dep.startsWith(SCOPE)) continue;
-    const depShort = dep.slice(SCOPE.length);
-    if (SHARED.includes(depShort)) continue;
+    const depHalf = layerByName.get(dep);
+    if (!depHalf || depHalf === TOOLCHAIN || depHalf === half) continue;
 
-    const depHalf = halfOf(depShort);
-    if (depHalf && depHalf !== half) {
-      problems.push(
-        `${pkg.name} (${LAYERS[half].label}) depends on ${dep} (${LAYERS[depHalf].label}). ` +
-          `The two halves share this repo and a toolchain, not code. If this dependency is ` +
-          `genuinely right, move the shared part into a package both halves may use — do not ` +
-          `widen the layer.`,
-      );
-    }
+    problems.push(
+      `${pkg.name} (${LABELS[half] ?? half}) depends on ${dep} (${LABELS[depHalf] ?? depHalf}). ` +
+        `The two halves share this repo and a toolchain, not code. If this dependency is ` +
+        `genuinely right, move the shared part into packages/${TOOLCHAIN}/ — do not widen the ` +
+        `layer.`,
+    );
   }
 }
 

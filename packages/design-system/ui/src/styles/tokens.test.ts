@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 
-import { CONTRAST_PAIRS } from "../../../../scripts/lib/token-schema.mjs";
+import { CONTRAST_PAIRS } from "../../../../../scripts/lib/token-schema.mjs";
 
 const css = readFileSync(
   join(dirname(fileURLToPath(import.meta.url)), "tokens.css"),

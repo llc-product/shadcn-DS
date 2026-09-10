@@ -80,7 +80,7 @@ export function describeComponent(name) {
 
   return {
     name,
-    file: `packages/ui/src/components/${name}/${name}.tsx`,
+    file: `packages/design-system/ui/src/components/${name}/${name}.tsx`,
     description: header?.[1] ?? "",
     client: /^\s*"use client";\s*$/m.test(source.split("\n").slice(0, 5).join("\n")),
     radixBase: radix?.[1] ? `@radix-ui/react-${radix[1]}` : null,

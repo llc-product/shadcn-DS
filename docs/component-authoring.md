@@ -1,15 +1,15 @@
 # Component authoring standard
 
-The **mandatory** rules for adding or changing a component in `packages/ui`. Follow them so every
+The **mandatory** rules for adding or changing a component in `packages/design-system/ui`. Follow them so every
 component types, styles and behaves the same way.
-**Reference implementation: [`packages/ui/src/components/button/`](../packages/ui/src/components/button).**
+**Reference implementation: [`packages/design-system/ui/src/components/button/`](../packages/design-system/ui/src/components/button).**
 
 ---
 
 ## Folder layout — one folder per component, with a barrel
 
 ```
-packages/ui/src/components/<name>/
+packages/design-system/ui/src/components/<name>/
   <name>.tsx        # the component (or the family: Card + CardHeader + CardTitle …)
   <name>.test.tsx   # behaviour, not snapshots
   <name>.json       # OPTIONAL sidecar — only what the source cannot say (see §7)
@@ -107,7 +107,7 @@ Colour, spacing, radius, size, shadow, type. All of it comes from the token laye
 
 If a design asks for a value no token has, **use the nearest token and report the substitution**.
 A 13px gap becomes `gap-3`. Never invent a token to match, and never edit one to make a finding
-disappear — `packages/ui/src/styles/tokens.test.ts` is a contrast gate, not a formality.
+disappear — `packages/design-system/ui/src/styles/tokens.test.ts` is a contrast gate, not a formality.
 
 ## 7. Sidecar JSON — only what the source cannot say
 
@@ -135,7 +135,7 @@ is a **default**, never a decision:
 - take a typed prop with a default when there is no attribute to spread onto (`ThemeToggle`)
 - fall back to `children` for visible text (`PaginationPrevious`, `BreadcrumbSeparator`)
 
-`packages/ui` may not import `next-intl`, or anything else that decides a locale. The app does that.
+`packages/design-system/ui` may not import `next-intl`, or anything else that decides a locale. The app does that.
 
 ## 9. No framework imports
 
