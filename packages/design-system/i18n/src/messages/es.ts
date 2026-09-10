@@ -16,6 +16,18 @@ export const es: DesignSystemMessages = {
   spinner: {
     label: "Cargando",
   },
+  carousel: {
+    previousLabel: "Diapositiva anterior",
+    nextLabel: "Diapositiva siguiente",
+  },
+  combobox: {
+    placeholder: "Selecciona una opción",
+    searchPlaceholder: "Buscar…",
+    empty: "No se encontraron resultados.",
+  },
+  datePicker: {
+    placeholder: "Elige una fecha",
+  },
   themeToggle: {
     label: "Cambiar tema",
   },

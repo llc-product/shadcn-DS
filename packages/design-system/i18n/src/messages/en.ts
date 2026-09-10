@@ -28,6 +28,21 @@ export const en = {
     /** Announced by role="status" so a loading state is never silent. */
     label: "Loading",
   },
+  carousel: {
+    /** Screen-reader text on the arrow buttons; they render an icon and no visible label. */
+    previousLabel: "Previous slide",
+    nextLabel: "Next slide",
+  },
+  combobox: {
+    /** Shown on the trigger until something is chosen. */
+    placeholder: "Select an option",
+    searchPlaceholder: "Search…",
+    /** Rendered in place of the list when the query matches nothing. */
+    empty: "No results found.",
+  },
+  datePicker: {
+    placeholder: "Pick a date",
+  },
   themeToggle: {
     label: "Toggle theme",
   },

@@ -16,6 +16,18 @@ export const vi: DesignSystemMessages = {
   spinner: {
     label: "Đang tải",
   },
+  carousel: {
+    previousLabel: "Ảnh trước",
+    nextLabel: "Ảnh sau",
+  },
+  combobox: {
+    placeholder: "Chọn một mục",
+    searchPlaceholder: "Tìm kiếm…",
+    empty: "Không có kết quả.",
+  },
+  datePicker: {
+    placeholder: "Chọn ngày",
+  },
   themeToggle: {
     label: "Đổi giao diện sáng tối",
   },

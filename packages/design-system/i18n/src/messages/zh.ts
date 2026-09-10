@@ -16,6 +16,18 @@ export const zh: DesignSystemMessages = {
   spinner: {
     label: "加载中",
   },
+  carousel: {
+    previousLabel: "上一张",
+    nextLabel: "下一张",
+  },
+  combobox: {
+    placeholder: "请选择",
+    searchPlaceholder: "搜索…",
+    empty: "无匹配结果。",
+  },
+  datePicker: {
+    placeholder: "选择日期",
+  },
   themeToggle: {
     label: "切换主题",
   },

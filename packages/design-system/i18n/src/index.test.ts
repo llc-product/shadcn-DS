@@ -3,6 +3,10 @@
 // The type system already refuses a locale that is missing a key. What it cannot catch is a key
 // present but left in English, or a locale added to LOCALES with no messages behind it — both of
 // which ship silently and are only visible to someone who reads that language.
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -86,4 +90,54 @@ describe("messagesFor", () => {
     expect(fallback).toBe(messages[DEFAULT_LOCALE]);
     expect(messagesFor(undefined)).toBe(messages[DEFAULT_LOCALE]);
   });
+});
+
+describe("coverage against the components", () => {
+  // The list is only useful if it is COMPLETE, and nothing made it so: `carousel`, `combobox` and
+  // `date-picker` each grew a replaceable default and none of them was added here. Every test above
+  // stayed green, because they compare the locales to each other — not to the components.
+  //
+  // Reading the component sources rather than importing them is deliberate. This package must not
+  // depend on the component library: an app that wants the strings should not pull React and every
+  // Radix primitive in behind them.
+  const UI_COMPONENTS = join(
+    dirname(fileURLToPath(import.meta.url)),
+    "../../ui/src/components",
+  );
+
+  /** `date-picker` -> `datePicker`, matching the namespaces above. */
+  const namespaceFor = (folder: string) =>
+    folder.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+
+  /**
+   * A user-visible English string the component renders when the caller supplies nothing. Two
+   * shapes, because the library uses both: a destructured prop default, and a literal attribute
+   * that props-spread-last lets a caller override.
+   */
+  const DEFAULTS = [
+    /\b(?:label|placeholder|searchPlaceholder|emptyText)\s*=\s*"[^"]+"/,
+    /\saria-label="[^"{]+"/,
+  ];
+
+  const componentsWithDefaults = readdirSync(UI_COMPONENTS, { withFileTypes: true })
+    .filter((e) => e.isDirectory())
+    .filter((e) => {
+      const file = join(UI_COMPONENTS, e.name, `${e.name}.tsx`);
+      if (!existsSync(file)) return false;
+      const source = readFileSync(file, "utf8");
+      return DEFAULTS.some((pattern) => pattern.test(source));
+    })
+    .map((e) => e.name);
+
+  it("finds the components that ship an English default at all", () => {
+    // Guards the guard: a regex that matches nothing would make every assertion below vacuous.
+    expect(componentsWithDefaults.length).toBeGreaterThan(3);
+  });
+
+  it.each(componentsWithDefaults)(
+    "%s renders a default string, so it has a namespace here",
+    (folder) => {
+      expect(Object.keys(messages.en)).toContain(namespaceFor(folder));
+    },
+  );
 });
