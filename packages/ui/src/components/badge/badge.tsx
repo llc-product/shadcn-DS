@@ -1,6 +1,6 @@
 // components/badge.tsx — small status or count label (CVA variants, not interactive).
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export const badgeVariants = cva(
   "inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium",

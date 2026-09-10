@@ -1,6 +1,6 @@
 // components/alert.tsx — inline message block, announced as a live alert.
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export const alertVariants = cva(
   "relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:size-4 [&>svg~*]:pl-7",

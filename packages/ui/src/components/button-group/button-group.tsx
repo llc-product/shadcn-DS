@@ -1,6 +1,6 @@
 // components/button-group.tsx — joins adjacent buttons into a single visual group.
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export const buttonGroupVariants = cva("flex w-fit items-stretch", {
   variants: {

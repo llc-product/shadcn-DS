@@ -7,4 +7,4 @@ export {
   TableRow,
   TableCell,
   TableCaption,
-} from "./table";
+} from "./table.js";

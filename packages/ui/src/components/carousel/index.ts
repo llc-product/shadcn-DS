@@ -5,4 +5,4 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-} from "./carousel";
+} from "./carousel.js";

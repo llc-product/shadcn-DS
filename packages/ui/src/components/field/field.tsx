@@ -1,6 +1,6 @@
 // components/field.tsx — form-field composition primitives for Server-Action + Zod forms.
-import { cn } from "../../utils/cn";
-import { Label } from "../label";
+import { cn } from "../../utils/cn.js";
+import { Label } from "../label/index.js";
 
 export function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return <fieldset className={cn("flex flex-col gap-6", className)} {...props} />;

@@ -1,6 +1,6 @@
 // components/native-select.tsx — styled native <select>, matching SelectTrigger's token styling.
 import { ChevronDown } from "lucide-react";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function NativeSelect({
   className,

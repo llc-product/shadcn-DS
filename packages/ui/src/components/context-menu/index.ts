@@ -14,4 +14,4 @@ export {
   ContextMenuShortcut,
   ContextMenuSubTrigger,
   ContextMenuSubContent,
-} from "./context-menu";
+} from "./context-menu.js";

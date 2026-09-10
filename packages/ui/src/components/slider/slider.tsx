@@ -2,7 +2,7 @@
 "use client";
 
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Slider({
   className,

@@ -5,4 +5,4 @@ export {
   CardDescription,
   CardContent,
   CardFooter,
-} from "./card";
+} from "./card.js";

@@ -7,4 +7,4 @@ export {
   EmptyTitle,
   EmptyDescription,
   EmptyContent,
-} from "./empty";
+} from "./empty.js";

@@ -6,4 +6,4 @@ export {
   InputGroupAddon,
   InputGroupText,
   InputGroupButton,
-} from "./input-group";
+} from "./input-group.js";

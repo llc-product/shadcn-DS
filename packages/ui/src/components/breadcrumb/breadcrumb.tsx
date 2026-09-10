@@ -1,6 +1,6 @@
 // components/breadcrumb.tsx — trail of ancestor links ending in the current page.
 import { ChevronRight, MoreHorizontal } from "lucide-react";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Breadcrumb(props: React.ComponentProps<"nav">) {
   return <nav aria-label="breadcrumb" {...props} />;

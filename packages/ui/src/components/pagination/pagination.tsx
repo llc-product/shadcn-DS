@@ -4,8 +4,8 @@
 // overridable because props spread last, and the visible Previous/Next labels because they fall
 // back to `children`. A localised app passes its own; the design system cannot know the language.
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import { cn } from "../../utils/cn";
-import { type ButtonProps, buttonVariants } from "../button/button";
+import { cn } from "../../utils/cn.js";
+import { type ButtonProps, buttonVariants } from "../button/button.js";
 
 export function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (

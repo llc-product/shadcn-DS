@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "../../utils/cn";
-import { Button } from "../button";
+import { cn } from "../../utils/cn.js";
+import { Button } from "../button/index.js";
 import {
   Command,
   CommandEmpty,
@@ -12,8 +12,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../command";
-import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+} from "../command/index.js";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover/index.js";
 
 export type ComboboxOption = { label: string; value: string };
 

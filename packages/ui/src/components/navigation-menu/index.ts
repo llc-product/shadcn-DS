@@ -8,4 +8,4 @@ export {
   NavigationMenuLink,
   NavigationMenuViewport,
   NavigationMenuIndicator,
-} from "./navigation-menu";
+} from "./navigation-menu.js";

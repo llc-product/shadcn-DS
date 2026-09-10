@@ -1,6 +1,6 @@
 // components/empty.tsx — empty-state placeholder primitives.
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Empty({ className, ...props }: React.ComponentProps<"div">) {
   return (

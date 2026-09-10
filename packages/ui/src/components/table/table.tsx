@@ -1,5 +1,5 @@
 // components/table.tsx — semantic data table with a scroll wrapper so a wide one cannot break the page.
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (

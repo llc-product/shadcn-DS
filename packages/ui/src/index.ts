@@ -7,6 +7,6 @@
 // The stylesheet is NOT imported from here. CSS is shipped as source and processed by the
 // consumer's Tailwind pipeline — see `@digitaltwin/design-system/styles.css`.
 
-export * from "./components";
-export * from "./tokens/tokens";
-export { cn } from "./utils/cn";
+export * from "./components/index.js";
+export * from "./tokens/tokens.js";
+export { cn } from "./utils/cn.js";

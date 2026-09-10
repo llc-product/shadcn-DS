@@ -45,7 +45,11 @@ export function sections() {
       out.push(current);
       continue;
     }
-    const exported = line.match(/^export \* from "\.\/([\w-]+)";$/);
+    // The `/index.js` suffix is optional in the pattern but not in the source: every relative
+    // specifier in this package carries an explicit extension, because a bare `./button` is a
+    // directory import and Node's ESM resolver refuses it — `import()` of the built entry point
+    // failed outright until they were added. Bundlers hide that, which is why it survived so long.
+    const exported = line.match(/^export \* from "\.\/([\w-]+)(?:\/index\.js)?";$/);
     if (exported?.[1] && current) current.names.push(exported[1]);
   }
   return out.filter((s) => s.names.length);

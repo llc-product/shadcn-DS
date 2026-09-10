@@ -1,5 +1,5 @@
 // components/skeleton.tsx — pulsing placeholder for content that has not arrived yet.
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (

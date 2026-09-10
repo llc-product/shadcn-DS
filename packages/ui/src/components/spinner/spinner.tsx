@@ -4,7 +4,7 @@
 // app should pass its own: `<Spinner aria-label={t("loading")} />` — props spread last, so the
 // caller wins. The design system cannot know what language it is rendering in.
 import { Loader2 } from "lucide-react";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   return (

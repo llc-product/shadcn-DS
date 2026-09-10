@@ -1,1 +1,1 @@
-export { type ComboboxOption, Combobox } from "./combobox";
+export { type ComboboxOption, Combobox } from "./combobox.js";

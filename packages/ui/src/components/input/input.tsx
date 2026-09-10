@@ -1,5 +1,5 @@
 // components/input.tsx — single-line text field, token-styled, native <input> underneath.
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Input({
   className,

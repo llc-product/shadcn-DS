@@ -9,4 +9,4 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
-} from "./drawer";
+} from "./drawer.js";

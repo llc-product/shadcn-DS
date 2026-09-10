@@ -1,7 +1,7 @@
 // components/input-group.tsx — Input wrapper that pairs it with inline leading/trailing addons.
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "../../utils/cn";
-import { Button } from "../button";
+import { cn } from "../../utils/cn.js";
+import { Button } from "../button/index.js";
 
 export function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (

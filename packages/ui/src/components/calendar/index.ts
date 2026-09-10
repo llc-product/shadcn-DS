@@ -1,1 +1,1 @@
-export { type CalendarProps, Calendar } from "./calendar";
+export { type CalendarProps, Calendar } from "./calendar.js";

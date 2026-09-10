@@ -5,71 +5,71 @@
 // a one-line change here instead of a merge conflict.
 
 // Primitives
-export * from "./button";
-export * from "./input";
-export * from "./textarea";
-export * from "./label";
-export * from "./badge";
-export * from "./skeleton";
-export * from "./spinner";
-export * from "./toggle";
-export * from "./toggle-group";
-export * from "./kbd";
-export * from "./button-group";
+export * from "./button/index.js";
+export * from "./input/index.js";
+export * from "./textarea/index.js";
+export * from "./label/index.js";
+export * from "./badge/index.js";
+export * from "./skeleton/index.js";
+export * from "./spinner/index.js";
+export * from "./toggle/index.js";
+export * from "./toggle-group/index.js";
+export * from "./kbd/index.js";
+export * from "./button-group/index.js";
 
 // Containers / layout
-export * from "./card";
-export * from "./separator";
-export * from "./scroll-area";
-export * from "./tabs";
-export * from "./accordion";
-export * from "./table";
-export * from "./breadcrumb";
-export * from "./pagination";
-export * from "./collapsible";
-export * from "./aspect-ratio";
-export * from "./resizable";
-export * from "./carousel";
-export * from "./item";
+export * from "./card/index.js";
+export * from "./separator/index.js";
+export * from "./scroll-area/index.js";
+export * from "./tabs/index.js";
+export * from "./accordion/index.js";
+export * from "./table/index.js";
+export * from "./breadcrumb/index.js";
+export * from "./pagination/index.js";
+export * from "./collapsible/index.js";
+export * from "./aspect-ratio/index.js";
+export * from "./resizable/index.js";
+export * from "./carousel/index.js";
+export * from "./item/index.js";
 
 // Forms
-export * from "./checkbox";
-export * from "./radio-group";
-export * from "./switch";
-export * from "./slider";
-export * from "./select";
-export * from "./native-select";
-export * from "./field";
-export * from "./input-group";
-export * from "./input-otp";
-export * from "./calendar";
-export * from "./date-picker";
-export * from "./combobox";
+export * from "./checkbox/index.js";
+export * from "./radio-group/index.js";
+export * from "./switch/index.js";
+export * from "./slider/index.js";
+export * from "./select/index.js";
+export * from "./native-select/index.js";
+export * from "./field/index.js";
+export * from "./input-group/index.js";
+export * from "./input-otp/index.js";
+export * from "./calendar/index.js";
+export * from "./date-picker/index.js";
+export * from "./combobox/index.js";
 
 // Feedback
-export * from "./alert";
-export * from "./progress";
-export * from "./avatar";
-export * from "./sonner";
-export * from "./empty";
+export * from "./alert/index.js";
+export * from "./progress/index.js";
+export * from "./avatar/index.js";
+export * from "./sonner/index.js";
+export * from "./empty/index.js";
 
 // Overlays
-export * from "./dialog";
-export * from "./sheet";
-export * from "./alert-dialog";
-export * from "./popover";
-export * from "./hover-card";
-export * from "./tooltip";
-export * from "./dropdown-menu";
-export * from "./context-menu";
-export * from "./menubar";
-export * from "./navigation-menu";
-export * from "./command";
-export * from "./drawer";
+export * from "./dialog/index.js";
+export * from "./sheet/index.js";
+export * from "./alert-dialog/index.js";
+export * from "./popover/index.js";
+export * from "./hover-card/index.js";
+export * from "./tooltip/index.js";
+export * from "./dropdown-menu/index.js";
+export * from "./context-menu/index.js";
+export * from "./menubar/index.js";
+export * from "./navigation-menu/index.js";
+export * from "./command/index.js";
+export * from "./drawer/index.js";
 
 // Data display
-export * from "./chart";
+export * from "./chart/index.js";
 
 // Theme
-export * from "./theme-provider";
-export * from "./theme-toggle";
+export * from "./theme-provider/index.js";
+export * from "./theme-toggle/index.js";

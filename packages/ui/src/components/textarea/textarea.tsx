@@ -1,5 +1,5 @@
 // components/textarea.tsx — multi-line text field, token-styled, native <textarea> underneath.
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (

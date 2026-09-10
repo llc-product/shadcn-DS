@@ -5,7 +5,7 @@ import { createContext, useContext, useId, useMemo } from "react";
 import * as RechartsPrimitive from "recharts";
 import { formatNumber } from "@digitaltwin/utils";
 
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export type ChartConfig = {
   [k in string]: {

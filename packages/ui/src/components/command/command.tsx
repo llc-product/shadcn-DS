@@ -3,8 +3,8 @@
 
 import { Command as CommandPrimitive } from "cmdk";
 import { Search } from "lucide-react";
-import { cn } from "../../utils/cn";
-import { Dialog, DialogContent } from "../dialog";
+import { cn } from "../../utils/cn.js";
+import { Dialog, DialogContent } from "../dialog/index.js";
 
 export function Command({
   className,

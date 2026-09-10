@@ -4,10 +4,10 @@
 import { CalendarIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { cn } from "../../utils/cn";
-import { Button } from "../button";
-import { Calendar } from "../calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+import { cn } from "../../utils/cn.js";
+import { Button } from "../button/index.js";
+import { Calendar } from "../calendar/index.js";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover/index.js";
 
 export type DatePickerProps = {
   value?: Date;

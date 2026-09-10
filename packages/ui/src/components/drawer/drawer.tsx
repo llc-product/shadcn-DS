@@ -2,7 +2,7 @@
 "use client";
 
 import { Drawer as DrawerPrimitive } from "vaul";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Drawer({
   shouldScaleBackground = true,

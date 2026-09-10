@@ -15,4 +15,4 @@ export {
   MenubarShortcut,
   MenubarSubTrigger,
   MenubarSubContent,
-} from "./menubar";
+} from "./menubar.js";

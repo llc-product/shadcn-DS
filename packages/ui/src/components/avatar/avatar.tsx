@@ -2,7 +2,7 @@
 "use client";
 
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Avatar({
   className,

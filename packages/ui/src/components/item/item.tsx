@@ -1,6 +1,6 @@
 // components/item.tsx — list-item primitive for menus, settings rows and row-style cards.
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export const itemVariants = cva(
   "group/item flex items-center rounded-md border border-transparent text-sm transition-colors",

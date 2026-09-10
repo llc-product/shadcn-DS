@@ -1,6 +1,6 @@
 // components/card.tsx — composable Card primitives.
 import { Slot } from "@radix-ui/react-slot";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 type DivProps = React.HTMLAttributes<HTMLDivElement>;
 

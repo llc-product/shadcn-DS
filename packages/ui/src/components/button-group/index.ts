@@ -4,4 +4,4 @@ export {
   ButtonGroup,
   ButtonGroupText,
   ButtonGroupSeparator,
-} from "./button-group";
+} from "./button-group.js";

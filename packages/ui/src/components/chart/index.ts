@@ -6,4 +6,4 @@ export {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-} from "./chart";
+} from "./chart.js";

@@ -1,5 +1,5 @@
 // components/kbd.tsx — styled <kbd> for keyboard-shortcut hints.
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn.js";
 
 export function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
   return (

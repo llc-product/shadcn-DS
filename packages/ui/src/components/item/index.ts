@@ -13,4 +13,4 @@ export {
   ItemActions,
   ItemHeader,
   ItemFooter,
-} from "./item";
+} from "./item.js";
