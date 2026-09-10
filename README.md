@@ -117,6 +117,35 @@ Finer-grained entry points, if the base layer is not wanted:
 import { Button, Dialog, DialogContent, toast } from "@digitaltwin/design-system";
 ```
 
+### If you serve a Content-Security-Policy
+
+**Your `style-src-attr` must allow `'unsafe-inline'`, or roughly half of this library stops
+working in production.**
+
+Radix positions its floating primitives — `Select`, `Popover`, `Tooltip`, `Dialog`, `DropdownMenu`,
+`ContextMenu`, `Menubar`, `NavigationMenu`, `HoverCard`, `ScrollArea`, `Slider` — by writing an
+inline `style="…"` **attribute** at runtime. The position is computed from the trigger's measured
+box, so it cannot be a class and cannot be known ahead of time.
+
+A nonce can never authorise a style _attribute_: nonces apply to elements, and an attribute has
+nowhere to carry one. CSP3 then falls `style-src-attr` back to `style-src`, so a policy that
+tightens `style-src` to `'nonce-…'` in production — the correct thing to do, and what a strict
+policy looks like — silently blocks every one of those components. Declare the attribute directive
+explicitly instead:
+
+```
+style-src      'self' 'nonce-{nonce}'   /* inline <style> ELEMENTS still need the nonce */
+style-src-attr 'unsafe-inline'          /* inline style ATTRIBUTES: what Radix writes */
+```
+
+This is worth stating loudly because of how it fails: dev is fine (a dev policy allows inline
+styles anyway), the build is fine, every test is fine, and production ships menus that open at the
+top-left corner of the page. Nothing logs a CSP violation you would connect to a component.
+
+The rest of a policy is yours — `img-src`, `connect-src`, `font-src` and `frame-ancestors` depend
+on your CDN, your analytics and whether you are embedded. Only this one directive is a requirement
+of the library.
+
 ### Peer dependencies
 
 `react` · `react-dom` · `lucide-react` · `tailwindcss` ^4, plus `next-themes` and `sonner` if you
