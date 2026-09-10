@@ -23,16 +23,13 @@
  * Anything marked `"private": true` is skipped — that is npm's own opt-out, and it is how
  * apps/docs stays a consumer rather than a package.
  */
-import { readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { workspacePackages } from "./lib/workspaces.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCOPE = "@digitaltwin/";
-
-const read = (file) => JSON.parse(readFileSync(file, "utf8"));
 
 const problems = [];
 let checked = 0;

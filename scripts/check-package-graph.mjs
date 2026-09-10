@@ -27,7 +27,7 @@
  * would be ways to smuggle a violation past this check. Neither is used in this workspace, and a
  * `no-restricted-syntax` rule would be the place to keep it that way.
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -55,8 +55,6 @@ const LABELS = {
 };
 
 const read = (file) => readFileSync(file, "utf8");
-const readJson = (file) => JSON.parse(read(file));
-
 const problems = [];
 const packages = workspacePackages(ROOT);
 

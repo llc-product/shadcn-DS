@@ -2,8 +2,8 @@
  * workspaces.mjs — expand the root manifest's `workspaces` globs, once.
  *
  * Its own module because two scripts need it and they had drifted: `check-package-graph.mjs`
- * learned `packages/*​/*` when the packages were grouped by layer, and `assert-publishable.mjs`
- * did not. It kept assuming one level, matched nothing, and reported "no publishable package
+ * learned the two-level glob when the packages were grouped by layer, and
+ * `assert-publishable.mjs` did not. It kept assuming one level, matched nothing, and reported "no publishable package
  * found — that cannot be right." It exits 1 there, so CI would have failed rather than published
  * nothing — but the guard for the publish stage was itself broken, and only running the publish
  * job would have said so.
@@ -42,7 +42,7 @@ export function workspacePackages(root) {
   for (const pattern of workspaces) {
     const parts = pattern.split("/");
     const stars = parts.filter((p) => p === "*").length;
-    // Only trailing stars: `packages/*` and `packages/*​/*` are understood, `packages/*​/src` is not.
+    // Only trailing stars: one level and two are understood; a star in the middle is not.
     if (stars === 0 || parts.slice(-stars).some((p) => p !== "*")) {
       throw new Error(
         `unsupported workspace pattern "${pattern}". Only trailing "*" segments are understood; ` +
