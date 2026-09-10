@@ -1,4 +1,56 @@
-# @digitaltwin/design-system
+# @digitaltwin packages
+
+Two sets of packages that share a toolchain and a release pipeline, and **nothing else**. Say that
+out loud, because the repository is easy to mistake for one thing:
+
+```
+packages/
+  ── the design system ──────────────────────────────────────────────────────────────────────────
+  ui/            @digitaltwin/design-system — 56 React primitives on the token layer
+  utils/         cn + formatting that states its locale instead of reading the machine's
+  ── the platform libraries ─────────────────────────────────────────────────────────────────────
+  api/           one API client instance, browser and server, on a backend-owned session
+  auth/          the session type + its error (edge-safe) · ./next holds the cookie plumbing
+  config/        environment SCHEMA fragments (no createEnv: that is the app's call)
+  constants/     the session cookie · locales — values where a MISMATCH between repos is a bug
+  types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
+  i18n/          the design system's OWN strings, translated. Not an app's copy.
+  ── toolchain, wanted by both ──────────────────────────────────────────────────────────────────
+  tsconfig/      base · react-library · next
+  eslint-config/ base · node · react · design-system · boundaries
+  testing/       the jsdom stubs and the vitest config factory
+apps/docs/       the docs site (Next.js static export) — and the library's first real consumer
+scripts/         the token pipeline, the catalog generators, and the publish guards
+docs/            component-authoring.md (the standard) · components.md (generated)
+```
+
+The design system is 4,100 of the ~5,000 lines here. The rest is what an app's BFF needs, and the
+two halves **do not import each other in either direction** — not once, today.
+
+## Why one repository
+
+Because the only thing they genuinely share is the toolchain, and splitting would mean duplicating
+`tsconfig`, `eslint-config` and the graph/publish guards, or linking them across repositories.
+That trades one seam for three, in exactly the files most likely to drift apart.
+
+And because no coupling means the split stays cheap. There is nothing to unpick — the day these
+halves want different release cadences, moving six small packages is an afternoon. Waiting costs
+nothing, so this is a decision to keep making rather than one to make now.
+
+**`npm run check:graph` is what keeps it true.** The separation was a fact, not a rule, and a fact
+is one convenient import away from ending. The check now fails on a dependency crossing between the
+halves, so "cheap to split later" stays a property of the repository instead of a claim in a
+README. Toolchain packages are exempt: both halves may use them, which is the whole reason they
+are here.
+
+**Why the small ones are separate packages.** Because there is more than one consumer, and a
+package boundary is the only thing a second repository can import. The alternative — one
+`@digitaltwin/core` holding types, constants and utils — was rejected on the architecture's own
+rule: every folder is named for what it holds, and a bucket has no criterion for refusing anything.
+
+---
+
+## The design system
 
 React 19 primitives on Tailwind v4 design tokens. 56 components, one token layer, one contrast
 gate that fails the build rather than a review.
@@ -6,34 +58,10 @@ gate that fails the build rather than a review.
 This is the React counterpart to [`libs/design-system`](https://gitlab.nailjob.us:8081/libs/design-system)
 (Quasar/Vue). The two share a brand and a way of working, not a component kit.
 
-```
-packages/
-  ui/            @digitaltwin/design-system — 56 React primitives on the token layer
-  utils/         cn + formatting that states its locale instead of reading the machine's
-  types/         Paginated<T> · ActionResult<T> — the contracts more than one app agrees on
-  constants/     cookie names · identity headers · locales — where a MISMATCH would be a bug
-  config/        environment SCHEMA fragments (no createEnv: that is the app's call)
-  i18n/          the design system's OWN strings, translated. Not an app's copy.
-  auth/          cookie-only JWT core (edge-safe) + ./next adapter (server-only)
-  api/           single-flight refresh policy + ./rtk adapter + ./server identity forwarding
-  tsconfig/      base · react-library · next
-  eslint-config/ base · node · react · design-system · boundaries
-  testing/       the jsdom stubs and the vitest config factory
-apps/docs/       the docs site (Next.js static export) — and the library's first real consumer
-scripts/         the token pipeline, the catalog generators, and the two publish guards
-docs/            component-authoring.md (the standard) · components.md (generated)
-```
-
-**Why the small ones are separate packages.** Because there is more than one consumer, and a
-package boundary is the only thing a second repository can import. The alternative — one
-`@digitaltwin/core` holding types, constants and utils — was rejected on the architecture's own
-rule: every folder is named for what it holds, and a bucket has no criterion for refusing anything.
-
 **Root entries are deliberately narrow.** `@digitaltwin/auth` exports only what runs anywhere; the
-Next adapter is reachable solely through `@digitaltwin/auth/next`, and `@digitaltwin/api`'s server
-half solely through `/server`. `npm run check:graph` walks what each root entry actually reaches
-and fails if server code is one of them, because an `exports` map is a promise a one-line edit can
-break with every test still green.
+Next adapter is reachable solely through `@digitaltwin/auth/next`. `npm run check:graph` walks what
+each root entry actually reaches and fails if server code is one of them, because an `exports` map
+is a promise a one-line edit can break with every test still green.
 
 ---
 

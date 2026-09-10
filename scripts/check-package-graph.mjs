@@ -5,7 +5,17 @@
  *    the build, in a different order on a different machine, with a message about a module that
  *    exists. Cheap to detect, miserable to debug.
  *
- * 2. SERVER CODE REACHABLE FROM A ROOT ENTRY. `@digitaltwin/auth` promises that importing the
+ * 2. LAYER VIOLATIONS. This repo holds two sets of packages that do not touch each other: the
+ *    design system, and the platform libraries an app's BFF needs. Today that separation is a
+ *    FACT — grep finds no import either way — but nothing enforces it, so it is a coincidence one
+ *    convenient import away from ending. The cost of losing it is not abstract: a design system
+ *    that reaches into `auth` cannot be installed by an app that authenticates differently, and
+ *    the failure shows up as a peer-dependency argument long after the import was written.
+ *
+ *    Keeping the two halves in one repo is a deliberate choice — they share a toolchain, and with
+ *    no coupling the split stays cheap to do later. This check is what keeps "later" cheap.
+ *
+ * 3. SERVER CODE REACHABLE FROM A ROOT ENTRY. `@digitaltwin/auth` promises that importing the
  *    package name gives you something an edge runtime or a client component can hold, and that
  *    `next/headers` and `server-only` are reachable only through `./next`. That promise is an
  *    `exports` map plus a barrel that deliberately re-exports less than it could — both of which a
@@ -26,6 +36,25 @@ const SCOPE = "@digitaltwin/";
 
 /** Modules that make a file server-only, whatever else it says about itself. */
 const SERVER_ONLY_IMPORTS = [/^server-only$/, /^next\/headers$/, /^next\/navigation$/];
+
+/**
+ * The two halves, and what each may depend on.
+ *
+ * A package named here may depend on its own half plus SHARED; anything else is a violation.
+ * A package in neither list is unconstrained — `tsconfig`, `eslint-config` and `testing` are
+ * toolchain, wanted by both halves, and are the reason one repo is still the right shape.
+ *
+ * Add a package to a half when it is written; leaving it out is not an error, it just means this
+ * check has nothing to say about it.
+ */
+const SHARED = ["tsconfig", "eslint-config", "testing"];
+const LAYERS = {
+  "design system": { members: ["design-system", "utils"], label: "the design system" },
+  platform: {
+    members: ["api", "auth", "config", "constants", "types", "i18n"],
+    label: "the platform libraries",
+  },
+};
 
 const read = (file) => readFileSync(file, "utf8");
 const readJson = (file) => JSON.parse(read(file));
@@ -78,7 +107,34 @@ function walk(name, trail) {
 }
 for (const name of graph.keys()) walk(name, []);
 
-// ── 2. server code reachable from a root entry ──────────────────────────────────────────────────
+// ── 2. layer violations ─────────────────────────────────────────────────────────────────────────
+const halfOf = (short) =>
+  Object.entries(LAYERS).find(([, { members }]) => members.includes(short))?.[0];
+
+for (const { pkg } of packages) {
+  const short = pkg.name.startsWith(SCOPE) ? pkg.name.slice(SCOPE.length) : pkg.name;
+  const half = halfOf(short);
+  if (!half) continue;
+
+  const deps = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
+  for (const dep of Object.keys(deps)) {
+    if (!dep.startsWith(SCOPE)) continue;
+    const depShort = dep.slice(SCOPE.length);
+    if (SHARED.includes(depShort)) continue;
+
+    const depHalf = halfOf(depShort);
+    if (depHalf && depHalf !== half) {
+      problems.push(
+        `${pkg.name} (${LAYERS[half].label}) depends on ${dep} (${LAYERS[depHalf].label}). ` +
+          `The two halves share this repo and a toolchain, not code. If this dependency is ` +
+          `genuinely right, move the shared part into a package both halves may use — do not ` +
+          `widen the layer.`,
+      );
+    }
+  }
+}
+
+// ── 3. server code reachable from a root entry ──────────────────────────────────────────────────
 /**
  * Two patterns, applied separately, because one alternation could not do this job.
  *
@@ -172,5 +228,6 @@ if (problems.length) {
 }
 
 console.log(
-  `check-package-graph: ${packages.length} workspaces, no cycles, no server code at a root entry`,
+  `check-package-graph: ${packages.length} workspaces, no cycles, ` +
+    `no cross-layer dependencies, no server code at a root entry`,
 );

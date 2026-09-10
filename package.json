@@ -1,9 +1,9 @@
 {
-  "name": "@digitaltwin/design-system-monorepo",
+  "name": "@digitaltwin/workspace",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "DigitalTwin Design System — React/Next UI kit + design tokens",
+  "description": "Two package sets sharing a toolchain: the DigitalTwin design system, and the platform libraries an app BFF needs",
   "license": "UNLICENSED",
   "workspaces": [
     "packages/*",
